@@ -1,0 +1,37 @@
+.data-table-filters.data-table-filters-balanced.opportunities-filters{grid-template-columns:minmax(0,1.7fr) repeat(2,minmax(0,.82fr)) minmax(0,.86fr) minmax(0,.95fr) minmax(0,.62fr);align-items:end;column-gap:12px}
+.opportunities-filters .data-table-filter-field{display:grid;gap:6px;align-content:end}.opportunities-filters .data-table-filter-field>span{font-size:.76rem;font-weight:650;color:var(--text-secondary)}.opportunities-filters input[type="date"],.opportunities-filters select,.opportunities-filters .filter-clear-button{height:38px;min-height:38px;width:100%;margin:0}.opportunities-filters input[type="date"]{min-width:0}
+.opportunities-sort{display:inline-flex;align-items:center;gap:6px;border:0;background:transparent;color:inherit;font:inherit;font-weight:700;padding:0;cursor:pointer}
+.opportunities-table .opportunity-interest-cell{display:block;max-width:280px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.opportunity-next-activity{display:flex;flex-direction:column;gap:2px;min-width:150px}.opportunity-next-activity small{color:var(--text-muted);font-size:.76rem}
+.opportunities-actions>div{display:flex;justify-content:center}.opportunities-actions a{display:grid;place-items:center;width:32px;height:32px;border:1px solid var(--border-color);border-radius:8px;color:var(--primary-color);background:#fff}.opportunities-actions a:hover{background:var(--surface-muted)}
+.opportunities-empty{display:grid;justify-items:center;gap:8px;padding:34px}.opportunities-empty svg{color:var(--primary-color)}
+.opportunity-form-layout{display:grid;grid-template-columns:minmax(0,1fr) 300px;gap:18px;align-items:start}.opportunity-form-layout .product-form-main{display:grid;gap:16px}
+.opportunity-product-add{display:grid;grid-template-columns:minmax(220px,1fr) 150px auto;gap:12px;align-items:end;margin-bottom:16px}.opportunity-product-add .button{height:42px;margin-bottom:1px}
+.opportunity-products-table th:nth-child(2),.opportunity-products-table td:nth-child(2),.opportunity-products-table th:nth-child(3),.opportunity-products-table td:nth-child(3),.opportunity-products-table th:nth-child(4),.opportunity-products-table td:nth-child(4){text-align:right}.opportunity-products-table th:last-child,.opportunity-products-table td:last-child{text-align:center;width:80px}.opportunity-products-empty{text-align:center!important;color:var(--text-muted);padding:24px!important}
+.opportunity-summary{position:sticky;top:16px;display:grid;gap:0}.opportunity-summary>div:not(.opportunity-summary-actions):not(.opportunity-conversion){display:flex;justify-content:space-between;gap:12px;padding:12px 0;border-bottom:1px solid var(--border-color);flex-wrap:wrap}.opportunity-summary>div>span{color:var(--text-muted)}.opportunity-summary>div>strong{text-align:right}.opportunity-summary>div>small{flex-basis:100%;color:var(--text-muted);line-height:1.35}.opportunity-summary>a{display:inline-flex;align-items:center;gap:7px;margin-top:14px;color:var(--primary-color);font-weight:700;text-decoration:none}
+.opportunity-summary-actions{display:grid;gap:8px;padding-top:16px}.opportunity-summary-actions .button{justify-content:center}.opportunity-conversion{display:grid;gap:7px;padding-top:16px}.opportunity-conversion small{color:var(--danger-color,#a53d36);line-height:1.35}
+.opportunity-relations>header{align-items:center}.opportunity-relations>header .button{margin-left:auto}.opportunity-relation-list{display:grid;gap:8px}.opportunity-relation-list>a{display:flex;align-items:center;justify-content:space-between;gap:14px;border:1px solid var(--border-color);border-radius:10px;padding:11px 13px;color:inherit;text-decoration:none;background:#fff}.opportunity-relation-list>a:hover{border-color:var(--primary-color);background:var(--surface-muted)}.opportunity-relation-list>a>span:first-child{display:flex;flex-direction:column;gap:3px}.opportunity-relation-list small,.opportunity-empty-copy{color:var(--text-muted)}
+.opportunity-history-grid{display:grid;grid-template-columns:1fr 1fr;gap:20px}.opportunity-history-grid h3{font-size:.9rem;margin:0 0 10px}.opportunity-history-grid ol{list-style:none;padding:0;margin:0;display:grid;gap:8px}.opportunity-history-grid li{border-left:3px solid var(--border-color);padding:8px 10px;background:var(--surface-muted);border-radius:0 8px 8px 0}.opportunity-history-grid li>span{display:flex;align-items:center;justify-content:space-between;gap:10px}.opportunity-history-grid time{font-size:.76rem;color:var(--text-muted)}.opportunity-history-grid p,.opportunity-history-grid small{display:block;margin:6px 0 0;color:var(--text-muted)}
+.opportunity-state-dialog{display:grid;gap:16px}.opportunity-state-dialog footer{display:flex;justify-content:flex-end;gap:10px}.opportunity-dialog-callout{display:flex;gap:10px;align-items:flex-start;padding:12px;border-radius:9px;background:var(--surface-muted)}.opportunity-dialog-callout p{margin:0}.opportunity-dialog-callout.lose,.opportunity-dialog-callout.cancel{color:var(--danger-color,#a53d36)}
+@media(max-width:1050px){.data-table-filters.data-table-filters-balanced.opportunities-filters{grid-template-columns:repeat(3,minmax(150px,1fr))}.opportunities-filters .data-table-search{grid-column:span 2}.opportunity-form-layout{grid-template-columns:minmax(0,1fr) 270px}}
+@media(max-width:850px){.data-table-filters.data-table-filters-balanced.opportunities-filters{grid-template-columns:1fr 1fr}.opportunities-filters .data-table-search{grid-column:1/-1}.opportunity-form-layout{grid-template-columns:1fr}.opportunity-summary{position:static}.opportunity-history-grid{grid-template-columns:1fr}}
+@media(max-width:600px){.data-table-filters.data-table-filters-balanced.opportunities-filters,.opportunity-product-add{grid-template-columns:1fr}.opportunities-filters>*{grid-column:auto!important}.opportunity-relations>header{align-items:flex-start}.opportunity-relations>header .button{margin-left:0}.opportunity-relation-list>a{align-items:flex-start;flex-direction:column}.opportunity-state-dialog footer{flex-direction:column-reverse}.opportunity-state-dialog footer .button{width:100%;justify-content:center}}
+
+
+/* Evitar desbordes de fechas y mantener el patrón de filtros del ERP. */
+.opportunities-filters > * { min-width:0; max-width:100%; box-sizing:border-box; }
+.opportunities-filters .data-table-filter-field { min-width:0; width:100%; }
+.opportunities-filters .data-table-filter-field input,
+.opportunities-filters .data-table-filter-field select { min-width:0; max-width:100%; box-sizing:border-box; }
+@media (max-width:1250px) {
+ .data-table-filters.data-table-filters-balanced.opportunities-filters {grid-template-columns:repeat(3,minmax(0,1fr));}
+ .opportunities-filters .data-table-search {grid-column:span 2;}
+}
+@media (max-width:700px) {
+ .data-table-filters.data-table-filters-balanced.opportunities-filters {grid-template-columns:repeat(2,minmax(0,1fr));}
+ .opportunities-filters .data-table-search {grid-column:1/-1;}
+}
+@media (max-width:480px) {
+ .data-table-filters.data-table-filters-balanced.opportunities-filters {grid-template-columns:minmax(0,1fr);}
+ .opportunities-filters .data-table-search {grid-column:auto;}
+}

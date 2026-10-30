@@ -1,0 +1,11 @@
+.commercial-progress{display:grid;gap:11px;padding:16px 18px;background:#f6f8f5;border:1px solid #d7ded4;border-radius:11px;color:#292524;min-width:0}
+.commercial-progress__heading{display:flex;justify-content:space-between;align-items:center;gap:12px}
+.commercial-progress__heading>div{display:grid;gap:4px;font-size:14px}
+.commercial-progress__heading small,.commercial-progress__hint{color:#78716c;font-size:11px;font-weight:400;line-height:1.5}
+.commercial-progress__value{font-size:23px;line-height:1.1;color:#496c51;font-variant-numeric:tabular-nums}
+.commercial-progress__track{height:9px;overflow:hidden;border-radius:999px;background:#e3e9e0}
+.commercial-progress__fill{height:100%;background:#739478;border-radius:inherit;transition:width .2s ease}
+.commercial-progress__evidence,.commercial-progress__next{margin:0;font-size:12px;line-height:1.5}
+.commercial-progress__evidence{color:#42694d}.commercial-progress__next{color:#625f58}
+.commercial-progress--compact{padding:13px;gap:9px}
+.commercial-progress--compact .commercial-progress__value{font-size:20px}

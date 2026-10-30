@@ -1,0 +1,10 @@
+{
+  "profiles": {
+    "TEKAManager.WhatsAppWebhook": {
+      "commandName": "Project",
+      "launchBrowser": false,
+      "environmentVariables": { "ASPNETCORE_ENVIRONMENT": "Development" },
+      "applicationUrl": "https://localhost:56071;http://localhost:56072"
+    }
+  }
+}

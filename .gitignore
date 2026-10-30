@@ -1,0 +1,77 @@
+# TEKA Manager - archivos locales, generados y sensibles
+
+# Frontend (Node.js / Vite / TypeScript)
+**/node_modules/
+**/dist/
+**/build/
+**/.vite/
+**/coverage/
+**/*.tsbuildinfo
+**/.eslintcache
+**/.parcel-cache/
+
+# Variables de entorno locales
+**/.env
+**/.env.*
+!**/.env.example
+
+# ASP.NET Core / Visual Studio
+**/bin/
+**/obj/
+**/.vs/
+**/TestResults/
+**/artifacts/
+**/packages/
+**/*.user
+**/*.suo
+**/*.userosscache
+**/*.sln.docstates
+
+# Configuracion ASP.NET local o con secretos
+**/appsettings.json
+**/appsettings.*.json
+!**/appsettings.example.json
+
+# Certificados, claves y almacenes privados
+**/*.pfx
+**/*.p12
+**/*.pem
+**/*.key
+**/*.snk
+**/*.jks
+
+# SQL Server: binarios, backups y export local con datos privados
+**/*.bak
+**/*.mdf
+**/*.ldf
+**/*.ndf
+**/*.trn
+**/*.bacpac
+**/*.dacpac
+/SQL/Script comp.sql
+
+# Logs, volcados y temporales
+**/*.log
+**/logs/
+**/Logs/
+**/*.tmp
+**/*.temp
+**/*.swp
+**/*.swo
+**/*.dmp
+
+# IDEs y editores (configuracion local)
+**/.vscode/
+**/.idea/
+**/.fleet/
+
+# Sistema operativo
+**/.DS_Store
+**/Thumbs.db
+**/Desktop.ini
+$RECYCLE.BIN/
+
+# Copias y paquetes locales del workspace
+**/*.zip
+**/*.7z
+**/*.rar

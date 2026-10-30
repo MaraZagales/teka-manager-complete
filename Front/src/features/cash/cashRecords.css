@@ -1,0 +1,215 @@
+.cash-record-page { display:grid; align-content:start; gap:var(--space-3); min-width:0; }
+.cash-record-page .page-header { margin-bottom:0; }
+.cash-record-page .data-table-filters { margin-bottom:0; }
+.cash-record-page .state-box,.daily-cash-page .state-box { min-height:0; padding:var(--space-6) var(--space-4); }
+.cash-record-page p { margin-block:0; }
+.cash-record-section { padding:var(--space-4); background:var(--surface); border:1px solid var(--border); border-radius:var(--r-md); min-width:0; }
+.cash-record-section h2 { font-size:16px; margin:0 0 var(--space-4); }
+.cash-record-grid { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:var(--space-4); }
+.cash-record-grid .field { margin:0; }
+.cash-record-grid .input-shell { height:42px; }
+.cash-record-grid textarea { min-height:90px; resize:vertical; }
+.cash-record-span { grid-column:1/-1; }
+.cash-record-actions { display:flex; flex-wrap:wrap; gap:var(--space-2); }
+.cash-record-table { table-layout:auto; min-width:900px; }
+.cash-record-table.cash-record-closures { min-width:1200px; }
+.cash-record-table th,.cash-record-table td { overflow-wrap:anywhere; vertical-align:middle; }
+.cash-record-table th.cash-record-money,.cash-record-table td.cash-record-money { text-align:right; font-variant-numeric:tabular-nums; white-space:nowrap; }
+.cash-record-page .pagination,.daily-cash-page .pagination { flex-wrap:wrap; gap:var(--space-2); }
+.cash-record-page .table-summary,.daily-cash-page .table-summary { padding:var(--space-2) var(--space-3); }
+:is(.cash-record-page,.daily-cash-work)>.reusable-data-table .table-scroll { overflow-x:auto; overflow-y:hidden; }
+.cash-record-help { color:var(--text-secondary); font-size:12px; }
+.cash-record-help summary { cursor:pointer; width:fit-content; }
+.cash-record-help p { margin-top:var(--space-2); line-height:1.5; }
+.cash-record-modal-body { display:grid; gap:var(--space-3); padding:var(--space-4); }
+.cash-record-modal-body .modal-actions { margin-top:0; }
+.cash-record-concepts-filters.data-table-filters { grid-template-columns:minmax(0,1fr) minmax(140px,180px) auto; }
+.cash-record-report-select { max-width:560px; }
+.cash-record-turn { display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:var(--space-3); margin:0; }
+.cash-record-turn dt,.cash-record-detail dt { font-size:12px; color:var(--text-secondary); }
+.cash-record-turn dd,.cash-record-detail dd { margin:var(--space-2) 0 0; overflow-wrap:anywhere; }
+.cash-record-turn dd { font-weight:var(--font-semibold); font-variant-numeric:tabular-nums; }
+.cash-record-detail { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:var(--space-5); margin:0; }
+.cash-record-tabs { display:flex; flex-wrap:wrap; gap:var(--space-4); border-bottom:1px solid var(--border); }
+.cash-record-tabs button { border:0; border-bottom:2px solid transparent; background:transparent; color:var(--text-secondary); padding:var(--space-3) 0; cursor:pointer; font:inherit; }
+.cash-record-tabs button[aria-selected=true] { border-bottom-color:var(--primary); color:var(--primary); font-weight:var(--font-semibold); }
+.cash-record-extra { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:var(--space-3); padding-top:var(--space-3); }
+.cash-record-count-table { min-width:0; }
+/* El modal compartido es el único dueño del scroll vertical: la tabla solo desborda en horizontal. */
+.daily-cash-form .table-scroll { max-height:none; overflow-x:auto; overflow-y:hidden; }
+.daily-cash-form .table-card { box-shadow:none; }
+.daily-cash-form .modal-actions { position:sticky; bottom:calc(-1 * var(--space-4)); background:var(--surface); padding-bottom:var(--space-3); z-index:2; }
+.daily-cash-form .cash-bank-comparison { margin-bottom:0; }
+.daily-cash-form .cash-bank-comparison>section { min-width:0; padding:0; border:0; border-radius:0; background:transparent; overflow-wrap:anywhere; }
+.daily-cash-form .cash-bank-comparison>section p { font-size:12px; color:var(--text-secondary); margin-block:var(--space-2); }
+@media(max-width:760px) { .cash-record-grid,.cash-record-detail,.cash-record-extra,.cash-record-concepts-filters.data-table-filters { grid-template-columns:1fr; }.cash-record-turn {grid-template-columns:repeat(2,minmax(0,1fr));} }
+/* Solo las cuatro consultas de Caja ocupan el espacio disponible del shell.
+   En escritorio la tabla es el único scroll vertical; formularios, detalles y
+   resoluciones pequeñas mantienen el scroll natural de página y del modal. */
+@media(min-width:1200px) and (min-height:850px) {
+  .app-workspace:has(>.app-content>.cash-query-workspace) { height:100dvh; }
+  .app-content:has(>.cash-query-workspace) { display:flex; min-height:0; overflow:hidden; }
+  .cash-query-workspace { display:flex; flex-direction:column; flex:1; min-height:0; }
+  .cash-query-workspace>* { flex-shrink:0; }
+  .cash-query-workspace>.reusable-data-table { display:flex; flex-direction:column; flex:1; min-height:0; }
+
+  .cash-query-workspace .reusable-data-table { overflow:hidden; }
+  .cash-query-workspace .reusable-data-table>.table-scroll { flex:1; min-height:0; overflow:auto; scrollbar-gutter:stable; }
+  .cash-query-workspace .reusable-data-table>:is(.table-summary,.pagination) { flex-shrink:0; }
+  .cash-query-workspace .reusable-data-table thead th { position:sticky; top:0; z-index:1; }
+}
+
+/* Caja diaria usa paginación (sin scroll vertical dentro de la tabla). */
+.cash-query-workspace.daily-cash-page .daily-cash-work .table-scroll {overflow-x:auto!important;overflow-y:hidden!important;max-height:none!important;flex:none!important;}
+.cash-query-workspace.daily-cash-page .daily-cash-work .reusable-data-table {flex:none!important;overflow:visible!important;}
+.cash-record-detail-primary {grid-template-columns:repeat(3,minmax(0,1fr));gap:var(--space-4);}
+.cash-record-extra-details>summary {font-weight:var(--font-semibold);cursor:pointer;}
+.cash-record-extra-details[open]>summary {margin-bottom:var(--space-4);}
+@media(max-width:760px){.cash-record-detail-primary{grid-template-columns:repeat(2,minmax(0,1fr));}}
+
+@media(min-width:1200px) and (min-height:850px){.app-content:has(>.daily-cash-page.cash-query-workspace){overflow-y:auto;}.cash-query-workspace.daily-cash-page{flex:1 1 auto;width:100%;min-width:0;}}
+
+.cash-close-page{max-width:1000px;width:100%;}
+.cash-close-form{display:grid;gap:var(--space-3);}
+.cash-close-form .field{max-width:420px;}
+.cash-close-form .plain-field textarea{min-height:72px;}
+.cash-fund-form{display:grid;gap:var(--space-3);max-width:760px;}
+.cash-fund-form .field{max-width:420px;}
+
+/* Caja diaria ocupa todo el ancho del área de trabajo. */
+.daily-cash-page.cash-query-workspace{width:100%;max-width:none;align-self:stretch;}
+.app-content:has(>.daily-cash-page.cash-query-workspace){align-items:stretch;}
+/* Ficha de lectura con jerarquía visual igual a Inventario. */
+.cash-detail-layout{display:grid;grid-template-columns:minmax(0,2fr) minmax(270px,1fr);gap:var(--space-3);align-items:start;}
+.cash-detail-card{min-width:0;}
+.cash-detail-card-heading{display:flex;align-items:center;gap:12px;margin-bottom:var(--space-4);font-size:16px;font-weight:var(--font-semibold);}
+.cash-detail-card-heading svg{color:var(--primary);background:var(--primary-soft);padding:8px;box-sizing:content-box;border-radius:9px;}
+.cash-detail-fields{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:var(--space-4);}
+.cash-detail-fields>div{min-width:0;}
+.cash-detail-fields dt{font-size:12px;color:var(--text-secondary);margin-bottom:8px;}
+.cash-detail-fields dd{margin:0;min-height:40px;display:flex;align-items:center;padding:9px 12px;background:var(--surface-soft);border:1px solid var(--border);border-radius:var(--r-sm);overflow-wrap:anywhere;}
+.cash-detail-fields .cash-detail-wide{grid-column:1/-1;}
+.cash-detail-secondary{margin-top:var(--space-3);}
+.cash-detail-secondary summary{cursor:pointer;font-weight:var(--font-semibold);}
+.cash-detail-secondary[open] .cash-detail-fields{margin-top:var(--space-4);}
+@media(max-width:900px){.cash-detail-layout{grid-template-columns:1fr;}}
+@media(max-width:560px){.cash-detail-fields{grid-template-columns:1fr;}.cash-detail-fields .cash-detail-wide{grid-column:auto;}}
+
+/* Caja diaria: distribuir las cinco columnas sobre el ancho completo de la tabla. */
+.daily-cash-page .cash-record-table {
+  width: 100%;
+  min-width: 760px;
+  table-layout: fixed;
+  margin-left: 0;
+  margin-right: auto;
+}
+.daily-cash-page .cash-record-table th,
+.daily-cash-page .cash-record-table td {
+  overflow-wrap: break-word;
+}
+
+/* Caja diaria: importe más próximo al concepto y separado del responsable.
+   No afecta la alineación monetaria de otras tablas del ERP. */
+.daily-cash-page .cash-record-table th.cash-record-money,
+.daily-cash-page .cash-record-table td.cash-record-money {
+  text-align: left;
+  padding-left: 12px;
+  padding-right: 24px;
+}
+
+/* Movimientos: paginación natural, sin scroll vertical dentro de la tabla. */
+.cash-query-workspace:not(.daily-cash-page) {width:100%;max-width:none;align-self:stretch;}
+.cash-query-workspace:not(.daily-cash-page) .reusable-data-table {flex:none!important;overflow:visible!important;}
+.cash-query-workspace:not(.daily-cash-page) .reusable-data-table>.table-scroll {flex:none!important;max-height:none!important;overflow-x:auto!important;overflow-y:hidden!important;}
+@media(min-width:1200px) and (min-height:850px){
+  .app-content:has(>.cash-query-workspace:not(.daily-cash-page)){overflow-y:auto!important;align-items:stretch;}
+}
+.cash-query-workspace:not(.daily-cash-page) .cash-record-table {width:100%;min-width:850px;table-layout:fixed;}
+
+/* Movimientos: misma estructura de filtros que Pedidos, sin alterar Caja diaria. */
+.financial-movement-filters.data-table-filters {
+  grid-template-columns: minmax(260px,1fr) 150px 150px 160px auto auto;
+  gap: 10px;
+  align-items:end;
+}
+.financial-movement-filters .data-table-search {grid-column:1;grid-row:1;min-width:0;}
+.financial-movement-filters .financial-date-from {grid-column:2;grid-row:1;}
+.financial-movement-filters .financial-date-to {grid-column:3;grid-row:1;}
+.financial-movement-filters .data-table-filter-field:not(.financial-date-from):not(.financial-date-to) {grid-column:4;grid-row:1;}
+.financial-movement-filters .financial-advanced-toggle {grid-column:5;grid-row:1;white-space:nowrap;}
+.financial-movement-filters .filter-clear-button {grid-column:6;grid-row:1;white-space:nowrap;}
+.financial-movement-filters input,.financial-movement-filters select,
+.financial-advanced-filters input,.financial-advanced-filters select {
+  width:100%;height:40px;min-width:0;box-sizing:border-box;
+  border:1px solid var(--border);border-radius:var(--r-sm);
+  background:var(--surface);padding:0 10px;color:var(--text);font:inherit;font-size:12px;
+}
+.financial-movement-filters .data-table-search input {border:0;height:100%;padding:0;background:transparent;}
+.financial-advanced-filters {display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;padding:14px 16px;margin-top:10px;border:1px solid var(--border);border-radius:var(--r-md);background:var(--surface);}
+.financial-filter-submit {display:flex;justify-content:flex-end;margin-top:10px;}
+.financial-filter-submit .button {min-width:155px;}
+@media(max-width:1300px){.financial-movement-filters.data-table-filters{grid-template-columns:minmax(200px,1fr) repeat(3,minmax(125px,160px));}.financial-movement-filters .financial-advanced-toggle{grid-column:3;grid-row:2;}.financial-movement-filters .filter-clear-button{grid-column:4;grid-row:2;}}
+@media(max-width:800px){.financial-movement-filters.data-table-filters{grid-template-columns:repeat(2,minmax(0,1fr));}.financial-movement-filters .data-table-search{grid-column:1/-1;grid-row:auto;}.financial-movement-filters .financial-date-from,.financial-movement-filters .financial-date-to,.financial-movement-filters .data-table-filter-field:not(.financial-date-from):not(.financial-date-to),.financial-movement-filters .financial-advanced-toggle,.financial-movement-filters .filter-clear-button{grid-column:auto;grid-row:auto;}.financial-advanced-filters{grid-template-columns:repeat(2,minmax(0,1fr));}}
+@media(max-width:540px){.financial-movement-filters.data-table-filters,.financial-advanced-filters{grid-template-columns:1fr;}}
+
+/* Movimientos: los filtros se aplican al cambiar cada control; sin barra de envío. */
+.financial-filter-form { margin-bottom: 0; }
+
+/* Conciliaciones: controles consistentes con el resto de las consultas. */
+.bank-reconciliation-filter-form .data-table-filters {align-items:end;gap:12px;}
+.bank-reconciliation-filter-form .data-table-filter-field {min-width:0;}
+.bank-reconciliation-filter-form .data-table-filter-field > span {font-weight:600;}
+.bank-reconciliation-filter-form .data-table-filter-field input,.bank-reconciliation-filter-form .data-table-filter-field select {width:100%;min-width:0;}
+.bank-reconciliation-filter-form .button {min-height:38px;}
+.bank-file-picker {display:flex;align-items:center;gap:12px;flex-wrap:wrap;border:1px solid var(--border);border-radius:var(--r-md);padding:10px 12px;background:var(--surface);}
+.bank-file-native {position:absolute;width:1px;height:1px;opacity:0;pointer-events:none;}
+.bank-file-name {min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;color:var(--text);font-size:13px;}
+@media(max-width:600px){.bank-file-picker{align-items:stretch;flex-direction:column}.bank-file-name{white-space:normal;overflow-wrap:anywhere}}
+
+/* Conciliaciones: cinco filas por pagina y sin scroll vertical interno ni de pagina
+   en escritorio. Los demas modulos mantienen su comportamiento. */
+.bank-reconciliation-page .reusable-data-table { flex:none!important; overflow:visible!important; }
+.bank-reconciliation-page .reusable-data-table > .table-scroll {
+  flex:none!important; max-height:none!important; overflow-x:auto!important; overflow-y:hidden!important;
+}
+@media (min-width:1200px) {
+  .app-content:has(>.bank-reconciliation-page.cash-query-workspace) {
+    overflow-y:hidden!important; align-items:stretch;
+  }
+  .bank-reconciliation-page.cash-query-workspace {
+    flex:1 1 auto; min-height:0; gap:var(--space-3);
+  }
+  .bank-reconciliation-page .cash-record-table th,
+  .bank-reconciliation-page .cash-record-table td {
+    padding-top:10px; padding-bottom:10px;
+  }
+}
+@media (max-width:1199px) {
+  .app-content:has(>.bank-reconciliation-page.cash-query-workspace) {overflow-y:auto!important;}
+}
+
+/* Conciliaciones: normalización de fechas y tolerancia con los demás filtros. */
+.bank-reconciliation-filter-form .data-table-filter-field > input[type="date"],
+.bank-reconciliation-filter-form .data-table-filter-field > input[type="number"] {
+  box-sizing:border-box;
+  display:block;
+  width:100%;
+  height:38px;
+  min-height:38px;
+  padding:0 12px;
+  border:1px solid var(--border, #d5dde4);
+  border-radius:6px;
+  background:var(--surface, #fff);
+  color:var(--text, #12233b);
+  font:inherit;
+  font-size:13px;
+  line-height:normal;
+  outline-offset:2px;
+}
+.bank-reconciliation-filter-form .data-table-filter-field > input[type="date"]::-webkit-calendar-picker-indicator {
+  cursor:pointer;
+  opacity:.7;
+}
+.bank-reconciliation-filter-form .data-table-filter-field > input:is([type="date"],[type="number"]):focus-visible {
+  outline:2px solid var(--primary, #27815d);
+}

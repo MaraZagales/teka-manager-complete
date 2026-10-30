@@ -1,0 +1,64 @@
+/* Asistente de registro de listas de materiales: reutiliza controles y validaciones existentes. */
+.production-wizard-steps{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px;margin:16px 0 24px}
+.production-wizard-step{display:flex;align-items:center;gap:10px;text-align:left;border:1px solid var(--border-color,#dce2e8);border-radius:12px;padding:13px 15px;background:var(--surface,#fff);color:inherit;font-weight:600;cursor:default}
+.production-wizard-step.done{cursor:pointer}
+.production-wizard-step.current{border-color:var(--primary,#287e6b);box-shadow:inset 0 0 0 1px var(--primary,#287e6b)}
+.production-wizard-number{display:grid;place-items:center;width:27px;height:27px;flex-shrink:0;border-radius:50%;background:#e9edf1;color:#46515d;font-size:13px}
+.production-wizard-step.current .production-wizard-number,.production-wizard-step.done .production-wizard-number{background:#277a69;color:white}
+.production-wizard-actions{display:flex;justify-content:space-between;align-items:center}
+.production-wizard-navigation{display:flex;gap:10px}
+.production-wizard-summary{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px;margin:18px 0}
+.production-wizard-summary>div{display:flex;flex-direction:column;gap:5px;padding:15px;border:1px solid #e4e8ed;border-radius:10px}
+.production-wizard-summary span{font-size:12px;color:#66717d}
+.production-wizard-hint{display:flex;align-items:flex-start;gap:9px;padding:13px 15px;background:#f3f6f8;border-radius:10px;font-size:13px;line-height:1.5}
+.production-wizard-hint svg{flex-shrink:0;margin-top:2px}
+@media(max-width:800px){.production-wizard-steps{grid-template-columns:repeat(2,minmax(0,1fr))}.production-wizard-summary{grid-template-columns:1fr}}
+@media(max-width:480px){.production-wizard-steps{gap:6px}.production-wizard-step{padding:9px;font-size:12px;gap:6px}.production-wizard-actions{gap:12px;flex-wrap:wrap}}
+
+/* Identidad del producto en el primer renglón, sin subtítulo de página. */
+.production-config-product{display:flex;justify-content:space-between;align-items:center;gap:18px;padding:14px 18px;border:1px solid var(--border,#dce2e8);border-radius:12px;background:#fff;margin:15px 0 6px}
+.production-config-product-main{display:flex;align-items:center;gap:12px;flex-wrap:wrap}
+.production-config-product-label,.production-config-product-color>span:first-child{font-size:12px;color:var(--text-muted,#687484)}
+.production-config-product-main strong{font-size:16px}
+.production-config-product-code{font-size:12px;color:var(--text-muted,#687484)}
+.production-config-product-color{display:flex;align-items:center;gap:10px}
+.production-config-product-color strong{font-size:13px}
+.production-config-color-dot{display:inline-block;width:17px;height:17px;border:1px solid #cbd2d9;border-radius:50%}
+.production-config-form .production-config-grid{grid-template-columns:minmax(0,1fr) minmax(180px,240px)}
+.production-config-activation{grid-column:1/-1;display:flex!important;flex-direction:row;align-items:center;gap:9px;padding:4px 0;font-size:13px}
+.production-config-activation input{width:16px!important;height:16px!important;min-width:16px;accent-color:#287e6b;margin:0}
+.production-config-activation span{font-size:13px!important;color:inherit!important;font-weight:500!important}
+.production-config-grid input[readonly]{background:#f5f7f8;color:#46515d}
+@media(max-width:700px){.production-config-product{align-items:flex-start;flex-direction:column}.production-config-form .production-config-grid{grid-template-columns:1fr}}
+
+/* Recortes: cada registro usa todo el ancho, sin tarjeta angosta flotante. */
+.production-create-page .production-cut-editor{display:grid;gap:12px;width:100%;margin-top:14px}
+.production-create-page .production-cut-editor>div{display:grid;grid-template-columns:minmax(210px,2.3fr) minmax(130px,1fr) minmax(140px,1fr) minmax(105px,.8fr) minmax(125px,1fr) minmax(140px,1fr) 40px;align-items:end;gap:12px;width:100%;max-width:none;box-sizing:border-box;padding:16px;border:1px solid var(--border,#dce2e8);border-radius:10px;background:#fff}
+.production-create-page .production-cut-editor>div>label{display:flex;flex-direction:column;gap:7px;min-width:0;width:100%;margin:0}
+.production-create-page .production-cut-editor>div>label>span{font-size:12px;color:var(--text-muted,#687484);font-weight:500}
+.production-create-page .production-cut-editor>div>label>input,.production-create-page .production-cut-editor>div>label>select{width:100%;min-width:0;height:39px;box-sizing:border-box;border:1px solid var(--border,#dce2e8);border-radius:7px;padding:0 10px;background:#fff;font:inherit}
+.production-create-page .production-cut-editor>div>.production-remove{align-self:end;justify-self:center;height:39px;width:36px}
+@media(max-width:1250px){.production-create-page .production-cut-editor>div{grid-template-columns:repeat(3,minmax(0,1fr)) 40px}.production-create-page .production-cut-editor>div>label:first-child{grid-column:span 2}}
+@media(max-width:680px){.production-create-page .production-cut-editor>div{grid-template-columns:repeat(2,minmax(0,1fr))}.production-create-page .production-cut-editor>div>label:first-child{grid-column:1/-1}}
+
+/* Los recortes utilizan el mismo editor de filas que los materiales.
+   Anulamos la cuadrícula heredada de productionOrders.css. */
+.production-create-page .production-config-cut-lines{display:grid;gap:12px;width:100%;margin-top:12px}
+.production-create-page .production-config-cut-lines>div{display:grid;grid-template-columns:minmax(240px,2.4fr) minmax(130px,1.1fr) minmax(135px,1.1fr) minmax(110px,.9fr) minmax(135px,1.1fr) minmax(135px,1.1fr) 34px;align-items:end;gap:10px;padding:14px;border:1px solid var(--border,#dce2e8);border-radius:9px;background:#fff;width:100%;max-width:none;box-sizing:border-box}
+.production-create-page .production-config-cut-lines>div>label{display:grid;gap:6px;min-width:0;width:100%;margin:0}
+.production-create-page .production-config-cut-lines>div>label>span{font-size:12px;font-weight:500;color:var(--text-muted,#687484);line-height:1.25;min-height:16px}
+.production-create-page .production-config-cut-lines>div>label>input,.production-create-page .production-config-cut-lines>div>label>select{display:block;width:100%;min-width:0;height:39px;box-sizing:border-box;padding:0 9px;border:1px solid var(--border,#dce2e8);border-radius:7px;background:#fff;font:inherit}
+.production-create-page .production-config-cut-lines>div>.production-remove{align-self:end;justify-self:center;width:34px;height:39px;margin:0}
+@media(max-width:1350px){.production-create-page .production-config-cut-lines>div{grid-template-columns:repeat(3,minmax(0,1fr)) 34px}.production-create-page .production-config-cut-lines>div>label:first-child{grid-column:span 2}}
+@media(max-width:700px){.production-create-page .production-config-cut-lines>div{grid-template-columns:repeat(2,minmax(0,1fr))}.production-create-page .production-config-cut-lines>div>label:first-child{grid-column:1/-1}}
+
+/* Separación entre el título y la acción de agregar, en Materiales y Recortes. */
+.production-config-entry-section > header { display: flex; flex-direction: column; align-items: flex-start; gap: 13px; }
+.production-config-entry-section > header .button { align-self: flex-start; }
+
+/* Integración del planificador existente sin desmontarlo al cambiar de paso. */
+.production-wizard-planning-hidden{display:none}
+.production-wizard-planning{min-width:0}
+.production-wizard-steps{grid-template-columns:repeat(6,minmax(0,1fr))}
+@media(max-width:1100px){.production-wizard-steps{grid-template-columns:repeat(3,minmax(0,1fr))}}
+@media(max-width:600px){.production-wizard-steps{grid-template-columns:repeat(2,minmax(0,1fr))}}

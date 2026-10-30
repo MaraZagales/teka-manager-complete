@@ -1,0 +1,3 @@
+using Microsoft.AspNetCore.Authorization;using Microsoft.AspNetCore.Mvc;using Microsoft.EntityFrameworkCore;using TEKAManager.API.Security;using TEKAManager.Core.Data;using TEKAManager.Core.DTOs;
+namespace TEKAManager.API.Controllers;
+[ApiController,Route("api/auditoria"),Authorize,RequirePermission("Auditoría","Ver")]public class AuditoriaController(TekaDbContext db):ControllerBase{[HttpGet("sesiones")]public async Task<IActionResult> Sesiones()=>Ok(await db.Database.SqlQueryRaw<AuditoriaSesionDTO>("EXEC dbo.sp_AuditoriaSesion_GetAll").ToListAsync());[HttpGet("eventos")]public async Task<IActionResult> Eventos()=>Ok(await db.Database.SqlQueryRaw<AuditoriaEventoDTO>("EXEC dbo.sp_AuditoriaEvento_GetAll").ToListAsync());}

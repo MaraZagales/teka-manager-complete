@@ -1,0 +1,141 @@
+.sr-page{display:flex;flex-direction:column;gap:14px;color:#17263b;max-width:1600px;margin:0 auto}.sr-heading{display:flex;justify-content:space-between;align-items:center;gap:12px}.sr-heading h1{font-size:24px;letter-spacing:-.5px;margin:0}.sr-heading p,.sr-card p{margin:4px 0;color:#64748b;font-size:12px}.sr-actions{display:flex;gap:8px}.sr-btn{display:inline-flex;align-items:center;gap:7px;border:1px solid #dce5e6;border-radius:7px;background:#fff;color:#254153;padding:9px 13px;font-weight:600;cursor:pointer}.sr-btn:disabled{opacity:.5;cursor:not-allowed}.sr-primary{background:#096b50;color:white;border-color:#096b50}.sr-panel,.sr-card,.sr-kpis>div{background:white;border:1px solid #e5ebee;border-radius:10px;box-shadow:0 2px 10px #21394d08}.sr-tabs{display:flex;gap:4px;flex-wrap:wrap;background:#f4f7f7;border-radius:9px 9px 0 0;padding:5px}.sr-tabs button{border:0;background:transparent;border-radius:6px;padding:10px 13px;color:#31445b;font-weight:600;cursor:pointer}.sr-tabs button.selected{background:#086d51;color:white}.sr-filters{display:flex;align-items:end;gap:12px;padding:12px 14px;flex-wrap:wrap}.sr-filters label{display:flex;flex-direction:column;gap:5px;font-size:12px;color:#526477;font-weight:600}.sr-filters input,.sr-filters select{border:1px solid #dce4e8;border-radius:7px;background:#fff;padding:9px 10px;color:#23394d;min-width:160px}.sr-filter-note{font-size:11px;color:#748293;margin-left:auto;max-width:280px}.sr-kpis{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:10px}.sr-kpis>div{min-width:0;padding:15px;display:flex;flex-direction:column;gap:6px}.sr-kpis svg{color:#0d795b;width:20px;height:20px}.sr-kpis span{font-size:12px;font-weight:700}.sr-kpis strong{font-size:21px;white-space:nowrap;letter-spacing:-.4px}.sr-kpis small{font-size:11px;color:#66798a}.sr-visuals,.sr-tables{display:grid;grid-template-columns:1.25fr 1fr;gap:12px}.sr-card{padding:15px;min-width:0}.sr-card h2{font-size:15px;margin:0}.sr-card header{display:flex;justify-content:space-between;align-items:center;gap:10px;margin-bottom:12px}.sr-card header span{font-size:11px;color:#718094}.sr-table-scroll{overflow:auto;max-height:330px}.sr-card table{width:100%;border-collapse:collapse;font-size:12px;white-space:nowrap}.sr-card th{text-align:left;background:#f5f8f9;padding:11px 9px;color:#34485e;position:sticky;top:0}.sr-card td{padding:10px 9px;border-bottom:1px solid #edf1f2}.sr-card td:not(:first-child),.sr-card th:not(:first-child){text-align:right}.sr-card a{color:#086d51;font-weight:600}.sr-wide{grid-column:1/-1}.sr-empty{padding:48px 10px;text-align:center;color:#7b8b9b;font-size:13px}.sr-error{border:1px solid #e6a2a2;background:#fff4f4;padding:12px;border-radius:7px}.sr-error button{margin-left:15px}.sr-search{display:flex;gap:8px;align-items:center;border:1px solid #dce4e8;border-radius:8px;background:white;padding:8px 12px}.sr-search input{flex:1;border:0;outline:0;background:transparent}.sr-disclaimer{font-size:11px;color:#708294;margin:0 0 10px}@media(max-width:1150px){.sr-kpis{grid-template-columns:repeat(3,minmax(0,1fr))}.sr-visuals,.sr-tables{grid-template-columns:1fr}}@media(max-width:650px){.sr-kpis{grid-template-columns:repeat(2,minmax(0,1fr))}.sr-heading{align-items:start;flex-direction:column}.sr-filters label{flex:1}.sr-filters input,.sr-filters select{min-width:0;width:100%}}
+
+/* Ajustes V2: jerarquía consistente con Inventario y gráficos de lectura analítica. */
+.sr-heading h1{font-size:30px;font-weight:750;letter-spacing:-.025em;line-height:1.1}
+.sr-page{max-width:none}
+.sr-visuals{grid-template-columns:minmax(0,1.3fr) minmax(0,1fr)}
+.sr-visuals .sr-card{min-height:310px}
+.sr-card h2{font-size:15px;font-weight:750}
+.sr-card th{font-weight:700}
+.sr-card tbody tr:hover{background:#f5faf7}
+.sr-kpis>div{border-top:2px solid #dceee7}
+@media(max-width:1150px){.sr-visuals{grid-template-columns:1fr}}
+@media(max-width:560px){.sr-heading h1{font-size:26px}}
+/* Ventas: misma familia visual y motor de informes que Inventario. */
+.sales-filter-bar{display:flex;gap:16px;align-items:end;flex-wrap:wrap;margin:0 0 18px;padding:14px 18px}.sales-filter-bar label{display:flex;flex-direction:column;gap:5px;font-size:12px;font-weight:600;color:#526477}.sales-filter-bar input,.sales-filter-bar select{border:1px solid #dce5e1;border-radius:7px;padding:9px;min-width:155px;background:white;color:#203a32}.sales-analysis-intro{color:#66798a;font-size:13px;margin:5px 0 15px}.sales-analytics-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px}.sales-analytics-card,.sales-detail-records{background:white;border:1px solid #e0e9e4;border-radius:12px;padding:17px;min-width:0}.sales-analytics-card header{display:flex;justify-content:space-between;gap:10px;align-items:flex-start}.sales-analytics-card h2{font-size:16px;margin:0}.sales-analytics-card header p{font-size:12px;color:#697b89;min-height:48px;margin:7px 0}.sales-analytics-card header a{color:#24815b}.sales-analytics-metric{display:flex;flex-direction:column;gap:4px;margin:5px 0 12px}.sales-analytics-metric strong{font-size:23px;color:#243e36}.sales-analytics-metric span{font-size:11px;color:#74838d}.sales-analytics-explanation{font-size:12px;line-height:1.6;color:#465c55;min-height:72px;padding:12px;background:#f4f8f6;border-radius:8px}.sales-analytics-detail{display:flex;align-items:center;gap:6px;font-size:12px;font-weight:700;color:#197451;text-decoration:none}.sales-detail-records{margin-top:16px}.sales-detail-records h2{font-size:16px;margin:0 0 14px}.sales-detail-records table{width:100%;border-collapse:collapse}.sales-detail-records th,.sales-detail-records td{text-align:left;padding:11px;border-bottom:1px solid #edf0ee;font-size:12px}.sales-detail-records th{background:#f6f8f7}.sales-detail-page .inventory-report-insights h3{font-size:13px;margin:18px 0 6px}.sales-detail-page .inventory-report-insights p{line-height:1.6}@media(max-width:1150px){.sales-analytics-grid{grid-template-columns:1fr}.sales-analytics-card header p,.sales-analytics-explanation{min-height:0}}
+
+/* Filtros de Ventas: exactamente el patrón de Reportes de Inventario. */
+.sales-analytics-page .sales-reports-filters{grid-template-columns:minmax(310px,1.25fr) minmax(190px,.72fr) minmax(165px,.55fr);margin:0}
+.sales-analytics-page .sales-reports-filters>.button{height:36px}
+@media(max-width:800px){.sales-analytics-page .sales-reports-filters{grid-template-columns:1fr 1fr}.sales-analytics-page .sales-reports-filters .inventory-report-period{grid-column:1/-1}}
+@media(max-width:480px){.sales-analytics-page .sales-reports-filters{grid-template-columns:1fr}.sales-analytics-page .sales-reports-filters .inventory-report-period{grid-column:auto}}
+/* V5: un gráfico principal y cuatro áreas para decisiones comerciales. */
+.sales-main-chart{margin-bottom:16px}
+.sales-main-chart-heading{display:flex;justify-content:space-between;align-items:flex-start;gap:16px}
+.sales-main-chart-heading h2{margin:0;font-size:17px}
+.sales-main-chart-heading p{font-size:12px;color:#667b75;margin:5px 0 12px}
+.sales-main-totals{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;margin:4px 0 8px}
+.sales-main-totals>div{display:flex;flex-direction:column;gap:3px;padding:11px 14px;border:1px solid #e4ede7;border-radius:8px;background:#f9fbfa}
+.sales-main-totals span{font-size:11px;color:#60746d}
+.sales-main-totals strong{font-size:19px;color:#1e4739}
+.sales-main-note{margin:8px 0 0;padding:11px 13px;background:#f4f8f6;border-radius:8px;font-size:12px;color:#425e53;line-height:1.6}
+.sales-decisions-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px;margin-bottom:12px}
+.sales-decision-card{display:flex;flex-direction:column;gap:12px;min-width:0;background:#fff;border:1px solid #e0e9e4;border-radius:12px;padding:18px}
+.sales-decision-header{display:flex;justify-content:space-between;gap:10px;align-items:baseline}
+.sales-decision-header h2{font-size:16px;margin:0;color:#1d332b}
+.sales-decision-header>span{font-size:11px;color:#71867c;text-align:right}
+.sales-decision-stat{display:flex;flex-direction:column;gap:3px}
+.sales-decision-stat strong{font-size:23px;color:#214d3c}
+.sales-decision-stat span{font-size:11px;color:#71867c}
+.sales-decision-list{display:flex;flex-direction:column;gap:4px}
+.sales-product-row{display:flex;align-items:center;gap:10px;border-bottom:1px solid #eef2ef;padding:7px 2px;font-size:12px}
+.sales-product-rank{color:#759386;width:18px;font-weight:700}
+.sales-product-name{flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.sales-product-row strong{color:#245c45;white-space:nowrap}
+.sales-decision-insight{font-size:12px;line-height:1.6;color:#435c51;background:#f4f8f6;border-radius:8px;padding:11px 13px;margin:0}
+.sales-decision-empty{font-size:12px;color:#687b73;line-height:1.5}
+.sales-decision-mini-list{display:flex;flex-direction:column;gap:7px}
+.sales-decision-mini-list>div{display:flex;justify-content:space-between;gap:12px;border-bottom:1px solid #edf1ee;padding:5px 0;font-size:12px}
+.sales-decision-mini-list span{min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.sales-decision-mini-list strong{white-space:nowrap;color:#275a43}
+.sales-decision-progress{height:9px;background:#e9eeea;border-radius:10px;overflow:hidden}
+.sales-decision-progress>div{height:100%;background:#d07a58;border-radius:10px}
+.sales-decision-card>.sales-analytics-detail{margin-top:auto}
+@media(max-width:850px){.sales-decisions-grid{grid-template-columns:1fr}.sales-main-totals{grid-template-columns:1fr}.sales-main-chart-heading{flex-direction:column}}
+
+/* V6 · Panel ejecutivo compacto, con acentos cromáticos y jerarquía visual. */
+.sales-analytics-page{--sales-green:#17866c;--sales-blue:#427bc1;--sales-amber:#ce8b27;--sales-coral:#c86c58}
+.sales-dashboard-layout{display:grid;grid-template-columns:minmax(350px,.92fr) minmax(0,1.5fr);gap:12px;align-items:stretch;margin-top:12px}
+.sales-dashboard-layout .sales-main-chart{margin:0;padding:14px;box-shadow:0 4px 18px #1b49310a;border-top:3px solid var(--sales-green)}
+.sales-dashboard-layout .sales-main-chart-heading h2{font-size:15px}
+.sales-dashboard-layout .sales-main-chart-heading p{font-size:11px;margin:3px 0 8px;line-height:1.35}
+.sales-dashboard-layout .sales-main-totals{gap:6px;margin:2px 0 3px}
+.sales-dashboard-layout .sales-main-totals>div{padding:8px 9px;background:#f3f9f6;border:0;border-radius:8px}
+.sales-dashboard-layout .sales-main-totals>div:nth-child(2){background:#f0f5fc}
+.sales-dashboard-layout .sales-main-totals>div:nth-child(3){background:#fff6e8}
+.sales-dashboard-layout .sales-main-totals>div:nth-child(2) strong{color:#3769ac}
+.sales-dashboard-layout .sales-main-totals>div:nth-child(3) strong{color:#aa7120}
+.sales-dashboard-layout .sales-main-totals strong{font-size:16px}
+.sales-dashboard-layout .sales-main-totals span{font-size:10px}
+.sales-dashboard-layout .sales-main-note{font-size:10.5px;line-height:1.45;padding:8px 10px;margin:2px 0 0}
+.sales-dashboard-layout .sales-decisions-grid{grid-template-columns:repeat(2,minmax(0,1fr));grid-template-rows:repeat(2,minmax(0,1fr));gap:12px;margin:0}
+.sales-dashboard-layout .sales-decision-card{padding:12px 13px;gap:7px;border-radius:11px;box-shadow:0 4px 18px #1b49310a;min-height:0;overflow:hidden}
+.sales-dashboard-layout .sales-decision-header h2{font-size:13px}
+.sales-dashboard-layout .sales-decision-header>span{font-size:10px}
+.sales-dashboard-layout .sales-decision-stat strong{font-size:20px}
+.sales-dashboard-layout .sales-decision-insight{padding:7px 9px;font-size:10.5px;line-height:1.4}
+.sales-dashboard-layout .sales-decision-mini-list{gap:2px}
+.sales-dashboard-layout .sales-decision-mini-list>div{font-size:11px;padding:3px 0}
+.sales-dashboard-layout .sales-product-row{padding:4px 2px;font-size:11px}
+.sales-dashboard-layout .sales-decision-list{gap:1px}
+.sales-dashboard-layout .sales-analytics-detail{font-size:11px}
+.sales-card-products{border-top:3px solid var(--sales-green)!important}
+.sales-card-clients{border-top:3px solid var(--sales-blue)!important}
+.sales-card-orders{border-top:3px solid var(--sales-coral)!important}
+.sales-card-channels{border-top:3px solid var(--sales-amber)!important}
+.sales-card-clients .sales-decision-stat strong{color:var(--sales-blue)}
+.sales-card-orders .sales-decision-stat strong{color:var(--sales-coral)}
+.sales-card-channels .sales-decision-stat strong{color:var(--sales-amber)}
+.sales-channel-list>div{display:grid!important;grid-template-columns:minmax(65px,1fr) minmax(35px,1fr) 22px;align-items:center;gap:6px!important}
+.sales-channel-track{height:6px;background:#f3ede3;border-radius:10px;overflow:hidden}
+.sales-channel-track i{display:block;height:100%;border-radius:10px;background:var(--sales-amber)}
+.sales-analytics-page .sr-disclaimer{font-size:10px;margin:7px 0 0}
+@media(min-width:1350px) and (min-height:750px){.sales-dashboard-layout{min-height:0}}
+@media(max-width:1180px){.sales-dashboard-layout{grid-template-columns:1fr}.sales-dashboard-layout .sales-main-chart{min-width:0}}
+@media(max-width:680px){.sales-dashboard-layout .sales-decisions-grid{grid-template-columns:1fr;grid-template-rows:auto}.sales-dashboard-layout .sales-main-totals{grid-template-columns:1fr 1fr}.sales-dashboard-layout .sales-main-totals>div:first-child{grid-column:1/-1}}
+
+/* V7 · Misma jerarquía visual de secciones que Reportes de Inventario. */
+.sales-v7-sections{display:flex;flex-direction:column;gap:12px;margin-top:12px}
+.sales-v7-section{border:1px solid #d8e8de;border-radius:13px;background:#f3faf6;padding:9px;min-width:0}
+.sales-v7-portfolio{background:#f3f7fc;border-color:#dce7f4}
+.sales-v7-operations{background:#fff9f1;border-color:#f1e2ca}
+.sales-v7-section-title{display:flex;align-items:flex-start;gap:10px;padding:2px 6px 9px;color:#258a64}
+.sales-v7-portfolio .sales-v7-section-title{color:#3d77bd}
+.sales-v7-operations .sales-v7-section-title{color:#bd8738}
+.sales-v7-section-title h2{font-size:15px;line-height:1.25;margin:0;color:#182c3c;font-weight:750}
+.sales-v7-section-title p{font-size:11px;margin:3px 0 0;color:#738398}
+.sales-v7-sections .sales-main-chart{padding:13px 16px;border:1px solid #dce6e3;border-radius:10px;box-shadow:none;background:#fff;margin:0}
+.sales-v7-sections .sales-main-chart-heading h2{font-size:14px}
+.sales-v7-sections .sales-main-chart-heading p{margin:3px 0 6px}
+.sales-v7-sections .sales-main-totals{grid-template-columns:repeat(3,minmax(0,1fr));gap:10px;margin:6px 0}
+.sales-v7-sections .sales-main-totals>div{padding:9px 12px;border:1px solid #e7eeea}
+.sales-v7-sections .sales-main-note{padding:7px 10px;font-size:11px;margin-top:0}
+.sales-v7-sections .sales-decisions-grid.sales-v7-pair{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));grid-template-rows:auto;gap:9px;margin:0}
+.sales-v7-sections .sales-decision-card{border:1px solid #dfe7e7;border-radius:10px;box-shadow:none;padding:13px 15px;gap:8px;overflow:visible;min-height:165px}
+.sales-v7-sections .sales-decision-header h2{font-size:14px}
+.sales-v7-sections .sales-decision-header>span{font-size:10px}
+.sales-v7-sections .sales-decision-insight{font-size:11px;line-height:1.45;padding:8px 10px}
+.sales-v7-sections .sales-decision-stat strong{font-size:21px}
+.sales-v7-sections .sales-product-row{font-size:12px;padding:5px 2px}
+.sales-v7-sections .sales-decision-mini-list>div{font-size:11px}
+.sales-v7-sections .sales-analytics-detail{font-size:11px}
+.sales-analytics-page .sr-disclaimer{margin-top:7px;font-size:10px}
+@media(min-width:1300px){.sales-v7-sections .sales-main-chart{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.3fr);column-gap:18px;align-items:start}.sales-v7-sections .sales-main-chart-heading{grid-column:1/-1}.sales-v7-sections .sales-main-totals{grid-column:1;grid-row:2;grid-template-columns:1fr;gap:7px}.sales-v7-sections .sales-main-chart>div[role=img]{grid-column:2;grid-row:2 / span 2}.sales-v7-sections .sales-main-note{grid-column:1;grid-row:3;align-self:start}}
+@media(max-width:780px){.sales-v7-sections .sales-decisions-grid.sales-v7-pair{grid-template-columns:1fr}.sales-v7-sections .sales-main-totals{grid-template-columns:1fr 1fr}.sales-v7-sections .sales-main-totals>div:first-child{grid-column:1/-1}}
+
+/* V8: tablero ejecutivo inspirado en la referencia, sin alterar filtros ni informes. */
+.sales-v8-dashboard{display:flex;flex-direction:column;gap:12px;margin-top:12px}
+.sales-v8-kpis{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:11px}
+.sales-v8-kpi,.sales-v8-panel{background:#fff;border:1px solid #e1e8e6;border-radius:11px;box-shadow:0 3px 12px rgba(28,62,51,.045)}
+.sales-v8-kpi{display:flex;flex-direction:column;gap:5px;padding:14px 15px;border-top:3px solid #218765;min-width:0}
+.sales-v8-kpi:nth-child(2){border-top-color:#4b8ed4}.sales-v8-kpi:nth-child(3){border-top-color:#e3a34c}.sales-v8-kpi:nth-child(4){border-top-color:#ca7762}.sales-v8-kpi:nth-child(5){border-top-color:#65a8a0}
+.sales-v8-kpi span{font-size:12px;font-weight:700;color:#2b3c49}.sales-v8-kpi strong{font-size:23px;color:#102b40;white-space:nowrap}.sales-v8-kpi small{font-size:10.5px;color:#657b87;line-height:1.3}
+.sales-v8-visuals{display:grid;grid-template-columns:minmax(0,1.45fr) minmax(0,1fr);gap:12px}.sales-v8-tables{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+.sales-v8-panel{padding:14px 15px;min-width:0}.sales-v8-panel-head{display:flex;justify-content:space-between;align-items:flex-start;gap:12px;margin-bottom:10px}.sales-v8-panel-head h2{font-size:15px;color:#183147;margin:0}.sales-v8-panel-head p{font-size:11px;color:#6b8090;margin:4px 0 0}.sales-v8-panel-head a,.sales-v8-insight a{display:inline-flex;align-items:center;gap:3px;white-space:nowrap;font-size:11px;font-weight:650;color:#087755;text-decoration:none}
+.sales-v8-channel-legend{display:grid;grid-template-columns:1fr 1fr;gap:7px 12px}.sales-v8-channel-legend>div{display:flex;align-items:center;gap:6px;font-size:11px;min-width:0}.sales-v8-channel-legend i{width:8px;height:8px;border-radius:50%;flex:none}.sales-v8-channel-legend span{flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.sales-v8-channel-legend strong{color:#193c33}
+.sales-v8-table-wrap{overflow:auto}.sales-v8-table{width:100%;border-collapse:collapse;font-size:11.5px}.sales-v8-table thead{background:#f5f8f9;color:#34465a}.sales-v8-table th{text-align:left;padding:9px 8px;font-weight:700;white-space:nowrap}.sales-v8-table td{padding:7px 8px;border-bottom:1px solid #edf0f2;color:#2b3f4b}.sales-v8-table tr:last-child td{border-bottom:0}.sales-v8-right{text-align:right!important;white-space:nowrap}.sales-v8-product{display:flex;align-items:center;gap:9px;min-width:0}.sales-v8-product>span:last-child{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.sales-v8-product-photo{width:38px;height:34px;object-fit:cover;border-radius:5px;background:#f1f5f3;border:1px solid #e4eae7;flex:none}.sales-v8-product .ec-image-missing{display:flex;align-items:center;justify-content:center;text-align:center;font-size:7px;color:#87918d;line-height:1.1}
+.sales-v8-insight{display:flex;align-items:center;gap:12px;background:#f1f8f4;border:1px solid #dcebe1;border-radius:9px;padding:10px 13px;font-size:11px;color:#405d50}.sales-v8-insight strong{white-space:nowrap;color:#146d4f}.sales-v8-insight span{flex:1;line-height:1.45}
+@media(max-width:1250px){.sales-v8-kpis{grid-template-columns:repeat(3,minmax(0,1fr))}}@media(max-width:900px){.sales-v8-visuals,.sales-v8-tables{grid-template-columns:1fr}}@media(max-width:650px){.sales-v8-kpis{grid-template-columns:repeat(2,minmax(0,1fr))}.sales-v8-insight{align-items:flex-start;flex-direction:column}.sales-v8-kpi strong{font-size:19px}}
+
+/* V8.2: cuatro tarjetas principales sin fila de KPI */
+.sales-v8-visuals{grid-template-columns:repeat(2,minmax(0,1fr))}

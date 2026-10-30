@@ -1,0 +1,8 @@
+import { Clock3 } from "lucide-react";
+import type { OpportunityHistoryEntry, OpportunityLegacyVisit } from "../../../../services/commercialOperationsApi";
+import { formatOpportunityDateTime, opportunityStateTone } from "../../utils/opportunityPresentation";
+import { StatusBadge } from "../../../../components/data/StatusBadge";
+
+export function OpportunityHistory({ history, legacyVisits }: { history:OpportunityHistoryEntry[]; legacyVisits:OpportunityLegacyVisit[] }) {
+  return <section className="product-form-section opportunity-history"><header><span><Clock3 size={18}/></span><div><h2>Historial</h2><p>Estados persistidos y seguimientos históricos registrados antes de centralizar la gestión en Agenda.</p></div></header><div className="opportunity-history-grid"><div><h3>Estados</h3>{history.length?<ol>{history.map((item)=><li key={item.historialEstadoOportunidadId}><span><StatusBadge tone={opportunityStateTone(item.estadoOportunidadNombre)}>{item.estadoOportunidadNombre}</StatusBadge><time>{formatOpportunityDateTime(item.fechaCambio)}</time></span>{item.observaciones&&<p>{item.observaciones}</p>}</li>)}</ol>:<p className="opportunity-empty-copy">No hay historial de estados disponible.</p>}</div><div><h3>Seguimientos históricos</h3>{legacyVisits.length?<ol>{legacyVisits.map((item)=><li key={item.visitaOportunidadId}><span><strong>{item.tipoVisita}</strong><time>{formatOpportunityDateTime(item.fechaVisita)}</time></span>{item.resultadoEsperado&&<p>{item.resultadoEsperado}</p>}{item.observaciones&&<small>{item.observaciones}</small>}</li>)}</ol>:<p className="opportunity-empty-copy">No hay visitas históricas registradas.</p>}</div></div></section>;
+}

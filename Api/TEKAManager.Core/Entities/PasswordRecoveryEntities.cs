@@ -1,0 +1,3 @@
+namespace TEKAManager.Core.Entities;
+public class UsuarioRecuperacion { public int UsuarioId { get; set; } public string Username { get; set; } = string.Empty; public string Nombre { get; set; } = string.Empty; public string? Apellido { get; set; } public string Email { get; set; } = string.Empty; public bool Activo { get; set; } }
+public class RecuperacionPasswordDetalle { public int RecuperacionPasswordId { get; set; } public int UsuarioId { get; set; } public string Username { get; set; } = string.Empty; public string Email { get; set; } = string.Empty; public string TokenRecuperacion { get; set; } = string.Empty; public DateTime FechaSolicitud { get; set; } public DateTime FechaExpiracion { get; set; } public bool Utilizado { get; set; } }

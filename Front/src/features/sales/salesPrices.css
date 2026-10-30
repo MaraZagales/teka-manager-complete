@@ -1,0 +1,416 @@
+.sales-prices-page {
+  display: grid;
+  gap: 13px;
+}
+.sales-prices-page .page-header {
+  margin-bottom: 0;
+}
+.sales-prices-page .page-header a.button.primary,
+.sales-prices-page .page-header a.button.primary:hover {
+  color: #fff;
+  text-decoration: none;
+}
+.sales-price-policy,
+.sales-prices-success,
+.sales-prices-error {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  padding: 11px 13px;
+  border: 1px solid var(--border);
+  border-radius: var(--r-sm);
+  background: var(--surface-soft);
+  color: var(--text-secondary);
+  font-size: 12px;
+}
+.sales-price-policy svg {
+  color: var(--primary);
+}
+.sales-prices-success {
+  border-color: #bfdbc8;
+  background: var(--success-soft);
+  color: var(--success);
+}
+.sales-prices-error {
+  border-color: #efc6c0;
+  background: var(--danger-soft);
+  color: #8b3a31;
+}
+.sales-prices-error > span {
+  flex: 1;
+}
+.sales-prices-error .button {
+  height: 32px;
+  min-height: 32px;
+}
+.sales-prices-filters {
+  margin: 0;
+  grid-template-columns: minmax(280px, 1fr) 190px 190px auto;
+}
+.sales-prices-table {
+  min-width: 1120px;
+}
+.sales-price-name {
+  display: grid;
+  gap: 3px;
+}
+.sales-price-name small,
+.sales-price-money span {
+  color: var(--text-muted);
+  font-size: 11px;
+}
+.sales-price-money strong {
+  color: var(--primary-dark);
+  font-size: 14px;
+  font-variant-numeric: tabular-nums;
+}
+.sales-price-row-actions > div {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 7px;
+}
+.sales-price-action {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  color: var(--primary-dark);
+  font: inherit;
+  font-size: 11px;
+  font-weight: 750;
+  text-decoration: none;
+  cursor: pointer;
+}
+.sales-price-action:hover {
+  color: var(--primary);
+}
+.sales-price-empty {
+  min-height: 130px;
+  display: grid;
+  place-items: center;
+  align-content: center;
+  gap: 5px;
+  color: var(--text-muted);
+}
+.sales-price-empty strong {
+  color: var(--text);
+}
+.sales-price-empty span {
+  font-size: 11px;
+}
+.sales-prices-page .table-summary {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+}
+.sales-prices-page .table-summary span {
+  color: var(--text-muted);
+  font-size: 11px;
+}
+.sales-price-history {
+  display: grid;
+  gap: 14px;
+}
+.sales-price-history h3 {
+  margin: 0;
+  font-size: 15px;
+}
+.sales-price-history article {
+  border: 1px solid var(--border);
+  border-radius: var(--r-sm);
+}
+.sales-price-muted {
+  margin: 0;
+  color: var(--text-muted);
+  font-size: 13px;
+  line-height: 1.45;
+}
+@media (max-width: 1000px) {
+  .sales-prices-filters {
+    grid-template-columns: 1fr 1fr;
+  }
+  .sales-prices-filters .data-table-search {
+    grid-column: 1/-1;
+  }
+  .sales-prices-filters .filter-clear-button {
+    justify-self: start;
+  }
+}
+@media (max-width: 650px) {
+  .sales-prices-filters {
+    grid-template-columns: 1fr;
+  }
+  .sales-prices-filters .data-table-search {
+    grid-column: auto;
+  }
+}
+.sales-price-inline-actions {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+}
+.sales-price-inline-actions button,
+.sales-price-inline-actions a {
+  display: grid;
+  place-items: center;
+  width: 30px;
+  height: 30px;
+  border: 1px solid var(--border);
+  border-radius: var(--r-sm);
+  background: #fff;
+  color: var(--primary-dark);
+  cursor: pointer;
+  text-decoration: none;
+}
+.sales-price-inline-actions button:hover,
+.sales-price-inline-actions a:hover {
+  border-color: var(--primary);
+  background: var(--success-soft);
+  text-decoration: none;
+}
+.sales-prices-table {
+  min-width: 940px;
+}
+.sales-prices-table th,
+.sales-prices-table td {
+  font-size: 13px;
+}
+.sales-prices-page .supplies-sort {
+  font-size: inherit;
+}
+.sales-price-editor {
+  display: grid;
+  gap: 13px;
+  width: min(100%, 1680px);
+  margin: 0 auto;
+  min-width: 0;
+}
+.sales-price-section {
+  display: grid;
+  align-content: start;
+  gap: 13px;
+  min-width: 0;
+  padding: 16px 18px;
+  border: 1px solid var(--border);
+  border-radius: var(--r-md);
+  background: #fff;
+}
+.sales-price-section h2 {
+  margin: 0;
+  font-size: 16px;
+}
+.sales-price-editor-grid { display: grid; grid-template-columns: minmax(0, 1.2fr) minmax(0, 1fr); align-items: start; gap: 13px; }
+.sales-price-product-layout { display: grid; grid-template-columns: minmax(0, 1.3fr) minmax(280px, 1fr); align-items: start; gap: 24px; }
+.sales-price-product-fields,
+.sales-price-origin-fields { display: grid; align-content: start; gap: 12px; min-width: 0; }
+.sales-price-group-label { color: var(--text-secondary); font-size: 13px; font-weight: var(--font-semibold); }
+.sales-price-product-fields .sales-price-field { max-width: none; }
+.sales-price-product-fields .sales-price-info { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 11px 18px; }
+.sales-price-origin-fields .sales-price-origin { display: grid; gap: 8px; }
+.sales-price-origin-fields .sales-price-origin label { padding: 9px 11px; }
+.sales-price-origin-fields .sales-price-field { max-width: none; }
+.sales-price-decision { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; }
+.sales-price-decision > div { display: grid; align-content: center; gap: 5px; min-width: 0; padding: 12px; border: 1px solid var(--border); border-radius: var(--r-sm); background: var(--surface-soft); }
+.sales-price-decision small { color: var(--text-muted); font-size: 12px; }
+.sales-price-decision strong { font-size: 18px; overflow-wrap: anywhere; }
+.sales-price-decision > div:last-child strong { color: var(--primary-dark); }
+.sales-price-info {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 14px;
+}
+.sales-price-info > div {
+  display: grid;
+  gap: 5px;
+  min-width: 0;
+}
+.sales-price-info small {
+  font-size: 12px;
+  color: var(--text-muted);
+}
+.sales-price-info strong {
+  font-size: 14px;
+  overflow-wrap: anywhere;
+}
+.sales-price-field {
+  display: grid;
+  gap: 7px;
+  max-width: 500px;
+  color: var(--text-secondary);
+  font-size: 13px;
+  font-weight: 650;
+}
+.sales-price-field input,
+.sales-price-field select {
+  width: 100%;
+  min-height: 42px;
+  padding: 8px 11px;
+  border: 1px solid var(--border);
+  border-radius: var(--r-sm);
+  background: #fff;
+  color: var(--text);
+  font: inherit;
+  font-size: 14px;
+}
+.sales-price-field input:focus,
+.sales-price-field select:focus {
+  outline: 2px solid var(--primary);
+  outline-offset: 1px;
+}
+.sales-price-field .field-error {
+  color: var(--danger);
+  font-size: 12px;
+}
+.sales-price-origin {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+.sales-price-origin label {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 12px 14px;
+  border: 1px solid var(--border);
+  border-radius: var(--r-sm);
+  font-size: 13px;
+  cursor: pointer;
+}
+.sales-price-origin input {
+  accent-color: var(--primary);
+}
+.sales-price-estimate {
+  display: grid;
+  gap: 7px;
+  padding: 12px 14px;
+  border-radius: var(--r-sm);
+  background: var(--success-soft);
+  color: var(--primary-dark);
+  font-size: 13px;
+}
+.sales-price-estimate.incomplete {
+  background: #fff7e5;
+  color: #76591f;
+}
+.sales-price-estimate span {
+  display: flex;
+  align-items: flex-start;
+  gap: 7px;
+}
+.sales-price-section > .button {
+  justify-self: start;
+}
+.sales-price-breakdown {
+  display: grid;
+  gap: 0;
+  min-width: 0;
+}
+.sales-price-breakdown > div {
+  display: flex;
+  justify-content: space-between;
+  gap: 18px;
+  padding: 9px 2px;
+  border-bottom: 1px solid var(--border);
+  font-size: 13px;
+}
+.sales-price-breakdown strong { text-align: right; white-space: nowrap; }
+.sales-price-breakdown .total {
+  font-size: 16px;
+  font-weight: 700;
+  color: var(--primary-dark);
+}
+.sales-price-effective {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  color: var(--text-secondary);
+  font-size: 14px;
+}
+.sales-price-editor-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+  padding-bottom: 22px;
+}
+.sales-price-editor-actions .button {
+  text-decoration: none;
+}
+.sales-price-editor-actions .button:hover { text-decoration: none; }
+@media (max-width: 1150px) {
+  .sales-price-product-layout { grid-template-columns: 1fr; gap: 14px; }
+  .sales-price-origin-fields .sales-price-origin { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+@media (max-width: 900px) {
+  .sales-price-editor-grid { grid-template-columns: 1fr; }
+}
+@media (max-width: 700px) {
+  .sales-price-info {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+  .sales-price-section {
+    padding: 16px;
+  }
+  .sales-price-origin {
+    display: grid;
+  }
+  .sales-price-origin-fields .sales-price-origin { grid-template-columns: 1fr; }
+  .sales-price-product-fields .sales-price-info { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .sales-price-editor-actions {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+  }
+}
+.sales-price-history { gap: 14px; padding: 18px; min-width: 0; }
+.sales-price-history-section { display: grid; gap: 12px; min-width: 0; padding: 15px 16px; border: 1px solid var(--border); border-radius: var(--r-md); background: #fff; }
+.sales-price-history-section h3 { font-size: 15px; }
+.sales-price-history-section .reusable-data-table { margin: 0; border: 0; box-shadow: none; min-width: 0; }
+.sales-price-history-section .table-scroll { max-height: none; overflow: visible; }
+.sales-price-history-table table { width: 100%; min-width: 0; table-layout: fixed; }
+.sales-price-history-table th,
+.sales-price-history-table td { padding: 9px 8px; white-space: normal; overflow-wrap: anywhere; font-size: 13px; }
+.sales-price-history-table td strong { color: var(--primary-dark); }
+.sales-price-corrections { display: grid; gap: 9px; }
+.sales-price-corrections article { display: grid; grid-template-columns: minmax(0, .8fr) minmax(0, 1.2fr); gap: 10px 16px; padding: 13px 14px; background: var(--surface-soft); }
+.sales-price-correction-meta { display: grid; align-content: start; gap: 4px; }
+.sales-price-correction-meta strong { font-size: 13px; }
+.sales-price-correction-meta span { color: var(--text-secondary); font-size: 12px; }
+.sales-price-correction-amounts { display: flex; align-items: center; justify-content: flex-end; gap: 11px; min-width: 0; }
+.sales-price-correction-amounts > div { display: grid; gap: 4px; }
+.sales-price-correction-amounts small { color: var(--text-muted); font-size: 11px; }
+.sales-price-correction-amounts strong { color: var(--text); font-size: 15px; white-space: nowrap; }
+.sales-price-correction-amounts > div:last-child strong { color: var(--primary-dark); }
+.sales-price-corrections article p { grid-column: 1 / -1; color: var(--text-secondary); font-size: 12px; overflow-wrap: anywhere; }
+.sales-price-corrections article p span { color: var(--text); font-weight: var(--font-semibold); }
+@media (max-width: 1250px) {
+  .sales-prices-table { min-width: 0; width: 100%; }
+  .sales-prices-table thead { display: none; }
+  .sales-prices-table tbody { display: grid; gap: 8px; padding: 9px; }
+  .sales-prices-table tbody tr { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); padding: 8px; border: 1px solid var(--border); border-radius: var(--r-sm); }
+  .sales-prices-table tbody td { display: grid; gap: 3px; padding: 6px; border: 0; }
+  .sales-prices-table tbody td::before { color: var(--text-muted); font-size: 11px; }
+  .sales-prices-table tbody td:nth-child(1)::before { content: 'Código'; }
+  .sales-prices-table tbody td:nth-child(2)::before { content: 'Producto'; }
+  .sales-prices-table tbody td:nth-child(3)::before { content: 'Tipo'; }
+  .sales-prices-table tbody td:nth-child(4)::before { content: 'Precio vigente'; }
+  .sales-prices-table tbody td:nth-child(5)::before { content: 'Vigente desde'; }
+  .sales-prices-table tbody td:nth-child(6)::before { content: 'Estado'; }
+  .sales-prices-table tbody td:nth-child(7)::before { content: 'Acciones'; }
+}
+@media (max-width: 650px) {
+  .sales-price-history { padding: 10px; }
+  .sales-price-history-section { padding: 12px; }
+  .sales-price-history-table thead { display: none; }
+  .sales-price-history-table tbody { display: grid; gap: 8px; }
+  .sales-price-history-table tbody tr { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); padding: 8px; border: 1px solid var(--border); border-radius: var(--r-sm); }
+  .sales-price-history-table tbody td { display: grid; gap: 3px; border: 0; }
+  .sales-price-history-table tbody td::before { color: var(--text-muted); font-size: 11px; }
+  .sales-price-history-table tbody td:nth-child(1)::before { content: 'Importe'; }
+  .sales-price-history-table tbody td:nth-child(2)::before { content: 'Vigente desde'; }
+  .sales-price-history-table tbody td:nth-child(3)::before { content: 'Vigente hasta'; }
+  .sales-price-history-table tbody td:nth-child(4)::before { content: 'Estado'; }
+  .sales-price-corrections article { grid-template-columns: 1fr; }
+  .sales-price-corrections article p { grid-column: auto; }
+  .sales-price-correction-amounts { justify-content: flex-start; flex-wrap: wrap; }
+}
