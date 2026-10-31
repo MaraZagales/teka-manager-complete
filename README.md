@@ -1,167 +1,259 @@
 # TEKA Manager
 
-TEKA Manager es un sistema ERP academico para la gestion de una fabrica de muebles. El workspace contiene una aplicacion web React, una API ASP.NET Core, un webhook de WhatsApp, servicios de dominio y scripts de SQL Server.
+### Sistema de Gestión Integral para una Fábrica de Muebles
 
-> Estado de publicacion: el contenido versionable esta **sin secretos detectados**, pero el repositorio aun esta **INCOMPLETO para reconstruir todo el sistema** porque faltan cuatro procedimientos de negocio referenciados por la API. Los `appsettings.json`, ZIP y el export privado `SQL/Script comp.sql` estan ignorados. La rotacion de las credenciales locales sigue siendo una accion externa obligatoria.
+**Proyecto académico — Tecnicatura Superior en Análisis de Sistemas**
 
-## Tecnologias verificadas
+TEKA Manager es un sistema de planificación de recursos empresariales (ERP) desarrollado para centralizar, organizar y optimizar los procesos administrativos, comerciales y operativos de **TEKA**, una fábrica de muebles ubicada en Córdoba, Argentina.
 
-- Frontend: React 18, TypeScript 5 y Vite 6.
-- Visualizacion y documentos: ECharts, Plotly, Leaflet, jsPDF y XLSX.
-- Backend: .NET 8 / ASP.NET Core Web API.
-- Acceso a datos: Entity Framework Core 8 y Microsoft.Data.SqlClient sobre SQL Server, con procedimientos almacenados.
-- Seguridad y documentacion de API: autenticacion JWT y Swagger/OpenAPI.
-- Integraciones presentes en configuracion: SMTP, WhatsApp Cloud API y OpenAI.
+La solución integra diferentes áreas de la organización en una plataforma web, facilitando la administración de la información, la trazabilidad de las operaciones y la toma de decisiones.
 
-La version de SDK fijada por `global.json` es .NET SDK `8.0.426`, con `rollForward` a la ultima revision compatible.
+El proyecto surge de la necesidad de reemplazar procesos de gestión descentralizados por una herramienta que permita trabajar con información consistente, actualizada y accesible según los permisos de cada usuario.
 
-## Estructura
+---
+
+## Integrantes del proyecto
+
+- **Benetti, Gabriela Melina**
+- **Pigini, Fernando Mariano**
+- **Zagales, Mara Macarena**
+
+## Objetivo del proyecto
+
+Diseñar y desarrollar un sistema de información integral que permita mejorar la gestión de los recursos y procesos de TEKA, mediante la digitalización y centralización de las operaciones de la empresa.
+
+### Objetivos específicos
+
+- Centralizar la información administrativa, comercial y operativa.
+- Optimizar el control de inventario de productos e insumos.
+- Mejorar el seguimiento de pedidos, ventas, comprobantes y entregas.
+- Facilitar la planificación y el control de la producción.
+- Administrar las operaciones de cobro y los movimientos financieros.
+- Fortalecer la gestión comercial y el seguimiento de oportunidades de venta.
+- Incorporar funcionalidades de comercio electrónico.
+- Proporcionar información útil para el seguimiento de las actividades y la toma de decisiones.
+- Implementar mecanismos de autenticación, autorización y trazabilidad de operaciones.
+
+## Módulos del sistema
+
+TEKA Manager está organizado en módulos funcionales que permiten gestionar diferentes procesos de la organización.
+
+### Inventario
+
+Permite administrar productos, insumos, depósitos, existencias y movimientos de stock. Incluye controles de disponibilidad y seguimiento de niveles críticos de inventario.
+
+### Ventas
+
+Centraliza la gestión de clientes, pedidos, comprobantes, remitos y entregas, permitiendo realizar el seguimiento de las operaciones comerciales.
+
+### Caja, cobros y cuentas corrientes
+
+Facilita la administración de cobros, medios de pago, movimientos de caja, operaciones bancarias y saldos de cuentas corrientes.
+
+### Producción
+
+Permite gestionar órdenes de producción, materiales requeridos, consumo de insumos y resultados del proceso productivo.
+
+### Gestión de recortes
+
+Administra los recortes de materiales generados durante la producción, permitiendo registrar su disponibilidad, reserva, utilización y baja.
+
+### Gestión comercial
+
+Incorpora herramientas para administrar oportunidades comerciales, consultas, presupuestos, actividades de seguimiento y relaciones con clientes potenciales.
+
+### Comercio electrónico
+
+Contempla funcionalidades vinculadas a la publicación y comercialización de productos mediante canales digitales, integradas con la información del sistema de gestión.
+
+### Usuarios, roles y seguridad
+
+Administra el acceso al sistema mediante usuarios, roles y permisos, incorporando mecanismos de autenticación y auditoría.
+
+### Configuración e integraciones
+
+Incluye funcionalidades de configuración general e integraciones con servicios externos, como correo electrónico, WhatsApp y servicios de inteligencia artificial.
+
+## Arquitectura del sistema
+
+TEKA Manager utiliza una arquitectura cliente-servidor, con separación entre la interfaz de usuario, los servicios de aplicación y la persistencia de datos.
+
+| Capa | Tecnologías |
+|---|---|
+| Frontend | React 18, TypeScript 5, Vite 6 |
+| Backend | ASP.NET Core Web API, .NET 8 |
+| Base de datos | Microsoft SQL Server |
+| Acceso a datos | Entity Framework Core 8, Microsoft.Data.SqlClient y procedimientos almacenados |
+| Seguridad | JWT y autorización mediante roles y permisos |
+| Documentación API | Swagger / OpenAPI |
+| Visualización | ECharts, Plotly y Leaflet |
+| Documentos y exportaciones | jsPDF y XLSX |
+| Integraciones | SMTP, WhatsApp Cloud API y OpenAI |
+
+### Organización del proyecto
 
 ```text
-TEKA-Manager-v03/
-|-- Front/                         React, TypeScript y Vite
-|   |-- public/                    recursos estaticos
-|   |-- scripts/                   utilidades del frontend
-|   `-- src/                       aplicacion y modulos funcionales
-|-- Api/
-|   |-- TEKAManager.API/           API HTTP, controladores y configuracion
-|   |-- TEKAManager.Core/          servicios, entidades, DTO y requests
-|   |-- TEKAManager.WhatsAppWebhook/ receptor independiente de webhooks
-|   `-- TEKAManager.sln            solucion .NET
-|-- SQL/                            esquema sanitizado, catalogos y export local ignorado
-|-- Docs/                           acuerdos, estandares y documentacion tecnica
-|-- global.json                    version del SDK .NET
-`-- README.md
+TEKA-Manager/
+│
+├── Front/
+│   ├── public/
+│   ├── scripts/
+│   └── src/
+│
+├── Api/
+│   ├── TEKAManager.API/
+│   ├── TEKAManager.Core/
+│   ├── TEKAManager.WhatsAppWebhook/
+│   └── TEKAManager.sln
+│
+├── SQL/
+│
+├── Docs/
+│
+├── global.json
+├── .gitignore
+└── README.md
 ```
 
-## Modulos verificados
+**Front:** contiene la aplicación web desarrollada con React, sus componentes, pantallas, servicios y recursos estáticos.
 
-El codigo del frontend y los controladores de la API contienen modulos para autenticacion y recuperacion de acceso, usuarios, roles y permisos, auditoria, inventario y existencias, ventas y remitos, comercial y oportunidades, ecommerce, caja y bancos, cobros y cuenta corriente, produccion, recortes, configuracion y WhatsApp.
+**Api:** contiene los proyectos .NET responsables de exponer los servicios HTTP, implementar la lógica de aplicación y gestionar integraciones externas.
 
-## Requisitos
+**SQL:** contiene los scripts correspondientes a la estructura y configuración de la base de datos.
 
-- Node.js y npm compatibles con las versiones bloqueadas en `Front/package-lock.json`. El proyecto no declara una version exacta de Node.
-- .NET SDK 8; el workspace fija la version indicada en `global.json`.
-- SQL Server. El workspace no fija una edicion o version concreta.
-- Una base `TEKA_Manager` con las tablas, vistas y procedimientos requeridos.
+**Docs:** reúne documentación funcional y técnica relacionada con el desarrollo del proyecto.
 
-No se deben versionar credenciales, tokens, certificados, backups ni exportaciones con datos reales.
+## Principales características
 
-## Frontend
+- Gestión centralizada de los procesos de la empresa.
+- Interfaz web organizada por módulos.
+- Control de acceso basado en roles y permisos.
+- Integración entre procesos comerciales, administrativos y productivos.
+- Registro y seguimiento de operaciones.
+- Gestión de información mediante una base de datos relacional.
+- Servicios REST para la comunicación entre frontend y backend.
+- Generación y exportación de información.
+- Integración con servicios externos.
 
-Desde `Front/`:
+## Requisitos técnicos
 
-```powershell
-npm ci
-Copy-Item .env.example .env
-npm run dev
+Para ejecutar TEKA Manager en un entorno local se requiere:
+
+- Node.js y npm compatibles con las dependencias del frontend.
+- .NET SDK 8, según la configuración de `global.json`.
+- Microsoft SQL Server.
+- Una base de datos denominada `TEKA_Manager`.
+- Configuración local de las cadenas de conexión y credenciales necesarias.
+
+## Instalación y ejecución
+
+### 1. Obtener el proyecto
+
+Clonar el repositorio:
+
+```bash
+git clone https://github.com/MaraZagales/teka-manager-complete.git
+cd teka-manager-complete
 ```
 
-La unica variable de entorno Vite verificada es:
+### 2. Configurar la base de datos
 
-| Variable | Uso | Ejemplo local |
-|---|---|---|
-| `VITE_API_URL` | URL base de la API | `https://localhost:56061` |
+Crear una base de datos en SQL Server con el nombre:
 
-El perfil local de la API declara `https://localhost:56061` y `http://localhost:56062`. El codigo del frontend conserva `http://localhost:5000` como fallback cuando la variable no esta definida, por lo que se recomienda crear `.env` desde el ejemplo. Para generar una compilacion de produccion:
-
-```powershell
-npm run build
+```sql
+CREATE DATABASE TEKA_Manager;
 ```
 
-## API
+En la carpeta `SQL/` se encuentran los scripts disponibles para crear la estructura de la base de datos y cargar los catálogos técnicos.
 
-Desde `Api/`:
+Ejecutar los scripts en el siguiente orden:
+
+1. `TEKA_Manager_Estructura_Sin_Datos.sql`
+2. `TEKA_Manager_Catalogos_Tecnicos.sql`
+
+**Nota:** los scripts proporcionan una base inicial de estructura y catálogos. La reconstrucción completa requiere disponer de todos los procedimientos almacenados utilizados por los módulos del sistema.
+
+### 3. Configurar el backend
+
+Ingresar a la carpeta:
 
 ```powershell
-Copy-Item TEKAManager.API/appsettings.example.json TEKAManager.API/appsettings.json
-Copy-Item TEKAManager.WhatsAppWebhook/appsettings.example.json TEKAManager.WhatsAppWebhook/appsettings.json
+cd Api
+```
+
+Restaurar las dependencias:
+
+```powershell
 dotnet restore TEKAManager.sln
+```
+
+Configurar la conexión a SQL Server y las variables de entorno necesarias, utilizando como referencia los archivos `appsettings.example.json`.
+
+Ejecutar la API:
+
+```powershell
 dotnet run --project TEKAManager.API/TEKAManager.API.csproj
 ```
 
-El webhook es un proceso separado:
+La configuración local contempla las siguientes direcciones:
+
+- HTTPS: `https://localhost:56061`
+- HTTP: `http://localhost:56062`
+
+### 4. Configurar el frontend
+
+Desde la raíz del repositorio, ingresar a:
 
 ```powershell
-dotnet run --project TEKAManager.WhatsAppWebhook/TEKAManager.WhatsAppWebhook.csproj
+cd Front
 ```
 
-Antes de ejecutar, reemplazar los marcadores mediante configuracion externa segura; no escribir secretos en los archivos copiados. Los archivos reales `appsettings.json` son locales y estan ignorados porque actualmente contienen secretos. Los archivos `appsettings.example.json` documentan la estructura requerida sin valores utilizables.
-
-### Configuracion segura
-
-`WebApplication.CreateBuilder(args)` ya carga variables de entorno de ASP.NET Core, por lo que no se necesita cambiar codigo para usarlas. La notacion reemplaza `:` por `__`; por ejemplo:
-
-```text
-ConnectionStrings__DefaultConnection
-Jwt__Key
-EcommerceJwt__Key
-Email__Username
-Email__Password
-WhatsApp__AppSecret
-WhatsApp__AccessToken
-WhatsApp__WebhookVerifyToken
-OpenAI__ApiKey
-```
-
-En PowerShell se pueden definir solo para la terminal actual, sin escribirlas en el repositorio:
+Instalar las dependencias:
 
 ```powershell
-$env:ConnectionStrings__DefaultConnection = "<CONEXION_LOCAL>"
-$env:Jwt__Key = "<CLAVE_LOCAL_ALEATORIA>"
-$env:EcommerceJwt__Key = "<CLAVE_LOCAL_ALEATORIA>"
+npm ci
 ```
 
-Los proyectos no tienen actualmente un `UserSecretsId`. Quien prefiera User Secrets debe inicializarlo manualmente para cada proyecto y luego guardar las claves fuera del workspace:
+Crear el archivo de configuración local:
 
 ```powershell
-dotnet user-secrets init --project TEKAManager.API/TEKAManager.API.csproj
-dotnet user-secrets set "Jwt:Key" "<CLAVE_LOCAL>" --project TEKAManager.API/TEKAManager.API.csproj
-
-dotnet user-secrets init --project TEKAManager.WhatsAppWebhook/TEKAManager.WhatsAppWebhook.csproj
-dotnet user-secrets set "WhatsApp:AccessToken" "<TOKEN_LOCAL>" --project TEKAManager.WhatsAppWebhook/TEKAManager.WhatsAppWebhook.csproj
+Copy-Item .env.example .env
 ```
 
-`user-secrets init` agrega un identificador al `.csproj`; no fue ejecutado durante la preparacion. En produccion se debe usar el proveedor de secretos de la plataforma. Tambien se requieren los identificadores de cuenta de WhatsApp cuando esa integracion esta habilitada. Consultar `Docs/WhatsApp_Cloud_API.md` para el flujo verificado en el proyecto.
+Verificar que la variable `VITE_API_URL` apunte a la dirección correspondiente de la API:
 
-Las variables `VITE_*` quedan incorporadas al JavaScript enviado al navegador. Nunca deben contener contrasenas, tokens ni claves privadas.
+```env
+VITE_API_URL=https://localhost:56061
+```
 
-## SQL Server
+Iniciar el servidor de desarrollo:
 
-Los archivos preparados son:
+```powershell
+npm run dev
+```
 
-- `TEKA_Manager_Estructura_Sin_Datos.sql`: 167 tablas, claves y relaciones, 361 procedimientos y 6 vistas, sin registros exportados;
-- `TEKA_Manager_Catalogos_Tecnicos.sql`: 433 filas de 34 catalogos tecnicos permitidos, dentro de una transaccion;
-- `Script comp.sql`: export local original con datos privados, excluido por `.gitignore`.
+Abrir en el navegador la dirección que informe Vite.
 
-El script de estructura no crea la base. Primero se debe crear una base vacia llamada `TEKA_Manager`, ejecutar `TEKA_Manager_Estructura_Sin_Datos.sql` y, opcionalmente, ejecutar `TEKA_Manager_Catalogos_Tecnicos.sql`. Ninguno fue ejecutado durante esta preparacion.
+## Seguridad y configuración
 
-El seed incluye exclusivamente tipos, estados, motivos, unidades, moneda, IVA, provincias/localidades, menus, permisos, roles y sus relaciones. Excluye usuarios, contrasenas, recuperaciones de acceso, clientes, domicilios, productos, insumos, depositos, cuentas bancarias, auditoria, comprobantes, pedidos, stock y movimientos.
+El sistema utiliza autenticación basada en JWT y mecanismos de autorización mediante roles y permisos.
 
-No se encontraron funciones SQL ni triggers aprobados en las fuentes actualmente disponibles. La comparacion estatica entre la API y el esquema encontro cuatro procedimientos de negocio ausentes:
+Las credenciales de servicios externos, claves de autenticación y cadenas de conexión sensibles deben configurarse localmente mediante variables de entorno o mecanismos seguros de administración de secretos.
 
-- `sp_InteresComercial_GetById`
-- `sp_InteresComercial_Update`
-- `sp_GIR_CertificarDiseno`
-- `sp_GIR_VincularReceta`
+El repositorio incluye archivos de configuración de ejemplo, pero no requiere publicar credenciales reales para consultar el código fuente.
 
-`sys.sp_getapplock` y `sys.sp_releaseapplock` tambien aparecen en el codigo, pero son procedimientos propios de SQL Server y no deben incluirse en el esquema. Los cuatro procedimientos de negocio deben recuperarse desde una fuente aprobada; no deben reconstruirse por inferencia porque contienen reglas funcionales.
+## Documentación
 
-Al momento de la revision final, los scripts incrementales vistos en la auditoria inicial ya no estaban presentes en `SQL/`. Las vistas se recuperaron en memoria desde `SQL.zip` y quedaron consolidadas en el script seguro. No se restauraron ni sobrescribieron otros archivos.
+La carpeta `Docs/` contiene documentación complementaria del proyecto, incluyendo acuerdos funcionales, estándares y especificaciones técnicas.
 
-## Contenido versionable
+La API dispone de documentación mediante Swagger/OpenAPI para facilitar la consulta y prueba de los servicios implementados.
 
-Se conservan el codigo fuente, `package.json`, `package-lock.json`, `tsconfig.json`, `vite.config.ts`, `global.json`, la solucion y proyectos .NET, recursos estaticos, documentacion revisada, scripts SQL sin datos privados y los archivos de configuracion de ejemplo.
+## Alcance académico
 
-El `.gitignore` raiz excluye dependencias, compilaciones, caches, configuracion local, secretos, certificados, logs, artefactos de IDE, backups de SQL Server, el export SQL con datos y las copias ZIP del workspace.
+TEKA Manager fue desarrollado como proyecto académico de la **Tecnicatura Superior en Análisis de Sistemas**, aplicando conocimientos de análisis de requerimientos, modelado de datos, arquitectura de software, programación, integración de sistemas y diseño de interfaces.
 
-## Comprobaciones antes de inicializar Git
+El proyecto busca representar una solución tecnológica aplicable a una organización real, contemplando tanto sus necesidades operativas como sus procesos administrativos y comerciales.
 
-1. Rotar todas las claves y tokens presentes actualmente en los dos `appsettings.json`.
-2. Confirmar que los nuevos valores se proporcionan mediante User Secrets, variables de entorno o un gestor de secretos.
-3. Recuperar y revisar los cuatro procedimientos de negocio faltantes.
-4. Revisar el script SQL base sanitizado y los catalogos en una base descartable.
-5. Revisar la lista final con `git status --ignored` despues de inicializar Git localmente.
-6. Ejecutar la compilacion del frontend y de la solucion .NET sin modificar dependencias.
+---
 
-No inicializar ni publicar el repositorio hasta completar los puntos anteriores.
+**TEKA Manager — Proyecto académico de Análisis de Sistemas.**
