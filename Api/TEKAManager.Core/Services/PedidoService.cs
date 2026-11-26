@@ -55,6 +55,10 @@ public class PedidoService : IPedidoService
             EstadoPedidoId = reader.GetInt32(reader.GetOrdinal("EstadoPedidoId")),
             EstadoPedidoNombre = reader.GetString(reader.GetOrdinal("EstadoPedidoNombre")),
             Total = reader.GetDecimal(reader.GetOrdinal("Total")),
+            DomicilioClienteId = reader.IsDBNull(reader.GetOrdinal("DomicilioClienteId"))
+                ? null
+                : reader.GetInt32(reader.GetOrdinal("DomicilioClienteId")),
+            DomicilioEntrega = GetNullableString(reader, "DomicilioEntrega"),
             Observaciones = GetNullableString(reader, "Observaciones")
         };
 
@@ -408,6 +412,8 @@ public class PedidoService : IPedidoService
         EstadoPedidoId = p.EstadoPedidoId,
         EstadoPedidoNombre = p.EstadoPedidoNombre,
         Total = p.Total,
+        DomicilioClienteId = p.DomicilioClienteId,
+        DomicilioEntrega = p.DomicilioEntrega,
         Observaciones = p.Observaciones
     };
 }

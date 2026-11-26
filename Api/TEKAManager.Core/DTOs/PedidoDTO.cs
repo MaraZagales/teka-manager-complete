@@ -12,5 +12,7 @@ public class PedidoDTO
     public int EstadoPedidoId { get; set; }
     public string EstadoPedidoNombre { get; set; } = string.Empty;
     public decimal Total { get; set; }
+    public int? DomicilioClienteId { get; set; }
+    public string? DomicilioEntrega { get; set; }
     public string? Observaciones { get; set; }
 }

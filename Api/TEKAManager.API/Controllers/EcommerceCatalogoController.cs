@@ -1,4 +1,5 @@
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.RateLimiting;
 using System.Data;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Data.SqlClient;
@@ -7,8 +8,8 @@ using TEKAManager.Core.Data;
 
 namespace TEKAManager.API.Controllers;
 
-// Administración del catálogo: no expone todavía el checkout ni el catálogo público.
-// Mantener detrás de la autenticación/permisos administrativos al habilitar el canal.
+// Administración del catálogo. Solo los endpoints marcados AllowAnonymous forman
+// parte del contrato público consumido por la aplicación móvil.
 [ApiController]
 [Authorize]
 [Route("api/ecommerce/catalogo")]
@@ -77,6 +78,7 @@ public sealed class EcommerceCatalogoController : ControllerBase
 
     // Lectura pública: no expone productos ocultos ni inactivos.
     [AllowAnonymous]
+    [EnableRateLimiting("public-commerce")]
     [HttpGet("publico")]
     public async Task<IActionResult> Publico(CancellationToken ct)
     {
@@ -91,9 +93,14 @@ public sealed class EcommerceCatalogoController : ControllerBase
                 items.Add(new {
                     ProductoId = Valor(reader, "ProductoId"), Codigo = Valor(reader, "Codigo"),
                     Nombre = Valor(reader, "Nombre"), DescripcionComercial = Valor(reader, "DescripcionComercial"),
+                    TipoProductoId = Valor(reader, "TipoProductoId"),
+                    TipoProductoNombre = Valor(reader, "TipoProductoNombre"),
+                    ColorId = Valor(reader, "ColorId"), ColorNombre = Valor(reader, "ColorNombre"),
+                    CodigoHex = Valor(reader, "CodigoHex"),
                     Precio = Valor(reader, "Precio"), AnchoCm = Valor(reader, "AnchoCm"),
                     AltoCm = Valor(reader, "AltoCm"), ProfundidadCm = Valor(reader, "ProfundidadCm"),
                     DepositoId = Valor(reader, "DepositoId"), CupoOnline = Valor(reader, "CupoOnline"),
+                    DisponibleOnline = Valor(reader, "DisponibleOnline"),
                     UrlPortada = Valor(reader, "UrlPortada"), Destacado = Valor(reader, "Destacado"),
                     OrdenVisual = Valor(reader, "OrdenVisual")
                 });
@@ -103,6 +110,96 @@ public sealed class EcommerceCatalogoController : ControllerBase
         {
             _logger.LogError(ex, "Error al consultar catálogo público");
             return StatusCode(500, new { mensaje = "No se pudo consultar el catálogo público." });
+        }
+    }
+
+    // Detalle público para la aplicación móvil. La pertenencia al catálogo
+    // público se valida primero para no exponer fichas inactivas u ocultas.
+    [AllowAnonymous]
+    [EnableRateLimiting("public-commerce")]
+    [HttpGet("publico/{productoId:int}")]
+    public async Task<IActionResult> DetallePublico(int productoId, CancellationToken ct)
+    {
+        try
+        {
+            var conn = await AbrirConexion(ct);
+            object? producto = null;
+
+            // Este procedimiento ya aplica las reglas de publicación y actividad.
+            await using (var catalogoCmd = new SqlCommand("dbo.sp_Ecommerce_Catalogo_Publico", conn)
+                         { CommandType = CommandType.StoredProcedure })
+            await using (var catalogoReader = await catalogoCmd.ExecuteReaderAsync(ct))
+            {
+                while (await catalogoReader.ReadAsync(ct))
+                {
+                    var id = Valor(catalogoReader, "ProductoId");
+                    if (id is null || Convert.ToInt32(id) != productoId) continue;
+
+                    producto = new
+                    {
+                        ProductoId = id,
+                        Codigo = Valor(catalogoReader, "Codigo"),
+                        Nombre = Valor(catalogoReader, "Nombre"),
+                        DescripcionComercial = Valor(catalogoReader, "DescripcionComercial"),
+                        TipoProductoId = Valor(catalogoReader, "TipoProductoId"),
+                        TipoProductoNombre = Valor(catalogoReader, "TipoProductoNombre"),
+                        ColorId = Valor(catalogoReader, "ColorId"),
+                        ColorNombre = Valor(catalogoReader, "ColorNombre"),
+                        CodigoHex = Valor(catalogoReader, "CodigoHex"),
+                        Precio = Valor(catalogoReader, "Precio"),
+                        AnchoCm = Valor(catalogoReader, "AnchoCm"),
+                        AltoCm = Valor(catalogoReader, "AltoCm"),
+                        ProfundidadCm = Valor(catalogoReader, "ProfundidadCm"),
+                        DepositoId = Valor(catalogoReader, "DepositoId"),
+                        CupoOnline = Valor(catalogoReader, "CupoOnline"),
+                        DisponibleOnline = Valor(catalogoReader, "DisponibleOnline"),
+                        UrlPortada = Valor(catalogoReader, "UrlPortada"),
+                        Destacado = Valor(catalogoReader, "Destacado"),
+                        OrdenVisual = Valor(catalogoReader, "OrdenVisual")
+                    };
+                    break;
+                }
+            }
+
+            if (producto is null)
+                return NotFound(new { mensaje = "El producto no existe o no está publicado." });
+
+            var imagenes = new List<object>();
+            await using (var fichaCmd = new SqlCommand("dbo.sp_Ecommerce_Producto_Get", conn)
+                         { CommandType = CommandType.StoredProcedure })
+            {
+                fichaCmd.Parameters.Add(Param("@ProductoId", productoId));
+                await using var fichaReader = await fichaCmd.ExecuteReaderAsync(ct);
+
+                if (!await fichaReader.ReadAsync(ct))
+                    return NotFound(new { mensaje = "No se encontró la ficha comercial del producto." });
+
+                if (await fichaReader.NextResultAsync(ct))
+                {
+                    while (await fichaReader.ReadAsync(ct))
+                    {
+                        imagenes.Add(new
+                        {
+                            ProductoImagenId = Valor(fichaReader, "ProductoImagenId"),
+                            UrlArchivo = Valor(fichaReader, "UrlArchivo"),
+                            TextoAlternativo = Valor(fichaReader, "TextoAlternativo"),
+                            EsPrincipal = Valor(fichaReader, "EsPrincipal"),
+                            OrdenVisual = Valor(fichaReader, "OrdenVisual")
+                        });
+                    }
+                }
+            }
+
+            return Ok(new { Producto = producto, Imagenes = imagenes });
+        }
+        catch (SqlException ex) when (ex.Number == 51000)
+        {
+            return NotFound(new { mensaje = "El producto no existe o no está publicado." });
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError(ex, "Error al consultar detalle público ecommerce {ProductoId}", productoId);
+            return StatusCode(500, new { mensaje = "No se pudo consultar el detalle público del producto." });
         }
     }
 
