@@ -17,8 +17,6 @@ public interface IOportunidadService
     Task<IEnumerable<LookupDTO>> GetMotivosPerdidaLookupAsync();
     Task<OportunidadResumenDTO?> GetResumenAsync();
     Task<IEnumerable<OportunidadFunnelDTO>> GetFunnelAsync();
-    Task<IEnumerable<MotivoPerdidaResumenDTO>> GetMotivosPerdidaResumenAsync();
-    Task<PanelComercialResumenDTO?> GetPanelComercialResumenMensualAsync();
     Task GuardarProductoAsync(int id, OportunidadProductoRequest request);
     Task EliminarProductoAsync(int id, int productoId);
     Task AsignarResponsableAsync(int id, int usuarioResponsableId);

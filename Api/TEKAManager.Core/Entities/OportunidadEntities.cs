@@ -51,25 +51,6 @@ public class OportunidadFunnel
     public decimal MontoEstimado { get; set; }
 }
 
-public class MotivoPerdidaResumen
-{
-    public int MotivoPerdidaOportunidadId { get; set; }
-    public string Motivo { get; set; } = string.Empty;
-    public int Cantidad { get; set; }
-    public decimal MontoEstimado { get; set; }
-}
-
-public class PanelComercialResumen
-{
-    public int PedidosMes { get; set; }
-    public decimal VariacionPedidosPorcentaje { get; set; }
-    public decimal TotalVendido { get; set; }
-    public decimal VariacionTotalVendidoPorcentaje { get; set; }
-    public int OportunidadesAbiertas { get; set; }
-    public decimal VariacionOportunidadesAbiertasPorcentaje { get; set; }
-    public int NoConcretadas { get; set; }
-    public decimal VariacionNoConcretadasPorcentaje { get; set; }
-}
 
 public class ConversionOportunidadPedido
 {

@@ -267,40 +267,6 @@ public class OportunidadService : IOportunidadService
         });
     }
 
-    public async Task<IEnumerable<MotivoPerdidaResumenDTO>> GetMotivosPerdidaResumenAsync()
-    {
-        var result = await _db.Database
-            .SqlQueryRaw<MotivoPerdidaResumen>("EXEC dbo.sp_OportunidadComercial_MotivosPerdidaResumen")
-            .ToListAsync();
-
-        return result.Select(x => new MotivoPerdidaResumenDTO
-        {
-            MotivoPerdidaOportunidadId = x.MotivoPerdidaOportunidadId,
-            Motivo = x.Motivo,
-            Cantidad = x.Cantidad,
-            MontoEstimado = x.MontoEstimado
-        });
-    }
-
-    public async Task<PanelComercialResumenDTO?> GetPanelComercialResumenMensualAsync()
-    {
-        var result = await _db.Database
-            .SqlQueryRaw<PanelComercialResumen>("EXEC dbo.sp_PanelComercial_ResumenMensual")
-            .ToListAsync();
-
-        var panel = result.FirstOrDefault();
-        return panel is null ? null : new PanelComercialResumenDTO
-        {
-            PedidosMes = panel.PedidosMes,
-            VariacionPedidosPorcentaje = panel.VariacionPedidosPorcentaje,
-            TotalVendido = panel.TotalVendido,
-            VariacionTotalVendidoPorcentaje = panel.VariacionTotalVendidoPorcentaje,
-            OportunidadesAbiertas = panel.OportunidadesAbiertas,
-            VariacionOportunidadesAbiertasPorcentaje = panel.VariacionOportunidadesAbiertasPorcentaje,
-            NoConcretadas = panel.NoConcretadas,
-            VariacionNoConcretadasPorcentaje = panel.VariacionNoConcretadasPorcentaje
-        };
-    }
 
     public async Task GuardarProductoAsync(int id, OportunidadProductoRequest request)
     {

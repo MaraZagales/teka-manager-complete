@@ -261,19 +261,4 @@ public class OportunidadesController : ControllerBase
         return Ok(funnel);
     }
 
-    [HttpGet("motivos-perdida/resumen")]
-    [ProducesResponseType(StatusCodes.Status200OK)]
-    public async Task<IActionResult> GetMotivosPerdidaResumen()
-    {
-        var motivos = await _oportunidadService.GetMotivosPerdidaResumenAsync();
-        return Ok(motivos);
-    }
-
-    [HttpGet("panel-comercial/resumen-mensual")]
-    [ProducesResponseType(StatusCodes.Status200OK)]
-    public async Task<IActionResult> GetPanelComercialResumenMensual()
-    {
-        var resumen = await _oportunidadService.GetPanelComercialResumenMensualAsync();
-        return Ok(resumen);
-    }
 }
