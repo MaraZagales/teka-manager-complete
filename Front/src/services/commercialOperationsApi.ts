@@ -7,7 +7,6 @@ export type PresupuestoDetalle = { presupuesto:Presupuesto; productos:ProductoPr
 export type Actividad = { interesComercialId?:number|null; actividadComercialId:number; clienteId:number; oportunidadComercialId?:number|null; presupuestoComercialId?:number|null; usuarioResponsableId?:number|null; tipo:string; titulo:string; descripcion?:string|null; fechaProgramada:string; fechaRealizacion?:string|null; fechaAlta?:string|null; fechaActualizacion?:string|null; estado:string; resultado?:string|null; clienteNombre?:string|null; clienteApellido?:string|null };
 export const listarPresupuestos=(oportunidadComercialId?:number,interesComercialId?:number)=>{const query=new URLSearchParams({...oportunidadComercialId?{oportunidadComercialId:String(oportunidadComercialId)}:{},...interesComercialId?{interesComercialId:String(interesComercialId)}:{}}).toString();return apiRequest<Presupuesto[]>(`/api/presupuestos-comerciales${query?`?${query}`:""}`)};
 export const detallePresupuesto=(id:number)=>apiRequest<PresupuestoDetalle>(`/api/presupuestos-comerciales/${id}`);
-export const crearPresupuesto=(body:{oportunidadComercialId:number;fechaVencimiento:string;usuarioResponsableId?:number|null;observaciones?:string})=>apiRequest<{presupuestoComercialId:number}>("/api/presupuestos-comerciales",{method:"POST",body:JSON.stringify(body)});
 export const guardarProductoPresupuesto=(id:number,body:{productoId:number;cantidad:number;precioUnitario:number;descuentoPorcentaje:number;observaciones?:string})=>apiRequest<void>(`/api/presupuestos-comerciales/${id}/productos`,{method:"PUT",body:JSON.stringify(body)});
 export const cambiarEstadoPresupuesto=(id:number,estadoNuevo:string,observaciones?:string)=>apiRequest<void>(`/api/presupuestos-comerciales/${id}/estado`,{method:"POST",body:JSON.stringify({estadoNuevo,observaciones})});
 export const listarActividades=(desde?:string,hasta?:string,interesComercialId?:number)=>{const query=new URLSearchParams({...desde?{desde}:{},...hasta?{hasta}:{},...interesComercialId?{interesComercialId:String(interesComercialId)}:{}}).toString();return apiRequest<Actividad[]>(`/api/agenda-comercial${query?`?${query}`:""}`)};
@@ -42,7 +41,6 @@ export const cancelarOportunidad=(id:number,observaciones?:string)=>apiRequest<v
 export const estadosOportunidad=()=>apiRequest<OpportunityLookup[]>("/api/oportunidades/lookups/estados");
 export const motivosPerdidaOportunidad=()=>apiRequest<OpportunityLookup[]>("/api/oportunidades/lookups/motivos-perdida");
 export const canalesVenta=()=>apiRequest<OpportunityLookup[]>("/api/auxiliares/canales-venta");
-export const clientesOportunidad=()=>apiRequest<OpportunityCustomer[]>("/api/clientes");
 export const productosOportunidad=()=>apiRequest<OpportunityCatalogProduct[]>("/api/productos");
 export const usuariosOportunidad=()=>apiRequest<OpportunityUser[]>("/api/usuarios/lookup");
 
