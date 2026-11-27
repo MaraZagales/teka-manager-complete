@@ -1,9 +1,11 @@
 .wa-page {
-  height: calc(100vh - 102px);
-  height: calc(100dvh - 102px);
+  height: calc(100dvh - 150px);
   max-width: 1750px;
-  margin: 0 auto;
+  width: 100%;
+  min-width: 0;
   min-height: 0;
+  box-sizing: border-box;
+  margin: 0 auto;
   display: grid;
   grid-template-rows: auto minmax(0, 1fr);
   overflow: hidden;
@@ -23,23 +25,18 @@
   margin: 0 0 5px;
   font-size: 28px;
 }
-.wa-page-title p {
-  margin: 0;
-  color: var(--text-muted);
-  font-size: 13px;
-}
 .wa-inbox {
   height: 100%;
   min-height: 0;
+  min-width: 0;
+  width: 100%;
+  box-sizing: border-box;
   background: var(--surface);
   border: 1px solid var(--border);
   border-radius: var(--r-lg);
   box-shadow: var(--shadow-sm);
   display: grid;
-  grid-template-columns: minmax(280px, 330px) minmax(390px, 1fr) minmax(
-      340px,
-      390px
-    );
+  grid-template-columns: minmax(0, 22%) minmax(0, 1fr) minmax(0, 26%);
   overflow: hidden;
 }
 .wa-inbox > .wa-conversations {
@@ -563,11 +560,7 @@
 .wa-empty span {
   font-size: 12px;
 }
-@media (max-width: 1250px) {
-  .wa-inbox {
-    grid-template-columns: 290px minmax(360px, 1fr) 340px;
-  }
-}
+
 @media (max-width: 1050px) {
   .wa-page {
     height: auto;
@@ -599,9 +592,6 @@
   }
   .wa-page-title > div:last-child {
     flex-direction: column;
-  }
-  .wa-page-title p {
-    display: none;
   }
   .wa-inbox {
     grid-template-columns: 1fr;
@@ -635,4 +625,71 @@
     align-items: flex-start;
     flex-direction: column;
   }
+}
+
+.wa-consultation-details {
+  min-width: 0;
+}
+
+.wa-consultation-details summary {
+  cursor: pointer;
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--text);
+  padding: 8px 0;
+}
+
+.wa-consultation-details[open] summary {
+  margin-bottom: 8px;
+}
+
+.wa-consultation-details label + label {
+  margin-top: 8px;
+}
+
+.wa-view-tabs {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.wa-view-tabs .button.active {
+  background: #e5f1e9;
+  color: #216344;
+  border-color: #b9d7c5;
+}
+
+.wa-history-record {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 16px;
+  padding: 14px;
+  border: 1px solid var(--border);
+  border-radius: 9px;
+  color: var(--text);
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.wa-history-record:hover {
+  background: #f0f7f3;
+  border-color: #aacdb8;
+}
+
+.wa-history-record > div {
+  display: grid;
+  gap: 5px;
+  min-width: 0;
+}
+
+.wa-history-record span {
+  font-size: 12px;
+  color: var(--text-muted);
+}
+
+.wa-history-record p {
+  margin: 0;
+  font-size: 13px;
+  overflow-wrap: anywhere;
 }

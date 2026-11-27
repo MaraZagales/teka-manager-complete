@@ -29,6 +29,20 @@ public sealed class WhatsAppController(IWhatsAppService service) : ControllerBas
     [HttpPut("conversations/{id:long}/assignee"), RequirePermission("Comercial","Editar")]
     public async Task<IActionResult> Assign(long id, WhatsAppAssignRequest request, CancellationToken ct) =>
         await Run(async () => { await service.AssignAsync(id, request.UsuarioResponsableId, ct); return new { }; }, noContent:true);
+    
+    [HttpPut("conversations/{id:long}/state")]
+[RequirePermission("Comercial", "Editar")]
+public async Task<IActionResult> ChangeState(
+    long id,
+    WhatsAppChangeStateRequest request,
+    CancellationToken ct)
+{
+    return await Run(async () =>
+    {
+        await service.ChangeStateAsync(id, request.Estado, ct);
+        return new { };
+    }, noContent: true);
+}
 
     [HttpPut("conversations/{id:long}/consultation"), RequirePermission("Comercial","Editar")]
     public async Task<IActionResult> Link(long id, WhatsAppLinkConsultationRequest request, CancellationToken ct) =>

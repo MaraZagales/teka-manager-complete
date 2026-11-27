@@ -152,11 +152,98 @@ public sealed class WhatsAppService(
         }
     }
 
-    public Task AssignAsync(long conversationId, int? userId, CancellationToken cancellationToken = default) => ExecuteAsync("""
-        IF @UserId IS NOT NULL AND NOT EXISTS(SELECT 1 FROM dbo.Usuario u JOIN dbo.UsuarioRol ur ON ur.UsuarioId=u.UsuarioId JOIN dbo.Rol r ON r.RolId=ur.RolId AND r.Activo=1 JOIN dbo.RolPermiso rp ON rp.RolId=r.RolId JOIN dbo.Menu mn ON mn.MenuId=rp.MenuId AND mn.Activo=1 JOIN dbo.Permiso p ON p.PermisoId=rp.PermisoId AND p.Activo=1 WHERE u.UsuarioId=@UserId AND u.Activo=1 AND u.Bloqueado=0 AND mn.Nombre='Comercial' AND p.Nombre='Ver') THROW 51000,'El responsable no tiene acceso activo al módulo Comercial.',1;
-        UPDATE dbo.WhatsAppConversacion SET UsuarioResponsableId=@UserId WHERE WhatsAppConversacionId=@Id;
-        IF @@ROWCOUNT=0 THROW 51000,'Conversación no encontrada.',1;
+    public Task AssignAsync(
+    long conversationId,
+    int? userId,
+    CancellationToken cancellationToken = default) => ExecuteAsync("""
+        SET XACT_ABORT ON;
+        BEGIN TRAN;
+
+        IF @UserId IS NOT NULL AND NOT EXISTS (
+            SELECT 1
+            FROM dbo.Usuario u
+            JOIN dbo.UsuarioRol ur ON ur.UsuarioId = u.UsuarioId
+            JOIN dbo.Rol r ON r.RolId = ur.RolId AND r.Activo = 1
+            JOIN dbo.RolPermiso rp ON rp.RolId = r.RolId
+            JOIN dbo.Menu mn ON mn.MenuId = rp.MenuId AND mn.Activo = 1
+            JOIN dbo.Permiso p ON p.PermisoId = rp.PermisoId AND p.Activo = 1
+            WHERE u.UsuarioId = @UserId
+              AND u.Activo = 1
+              AND u.Bloqueado = 0
+              AND mn.Nombre = 'Comercial'
+              AND p.Nombre = 'Ver'
+        )
+            THROW 51000, 'El responsable no tiene acceso activo al módulo Comercial.', 1;
+
+        UPDATE dbo.WhatsAppConversacion
+        SET UsuarioResponsableId = @UserId
+        WHERE WhatsAppConversacionId = @Id;
+
+        IF @@ROWCOUNT = 0
+            THROW 51000, 'Conversación no encontrada.', 1;
+
+        UPDATE i
+        SET i.UsuarioResponsableId = @UserId
+        FROM dbo.InteresComercial i
+        INNER JOIN dbo.WhatsAppConversacion c
+            ON c.InteresComercialId = i.InteresComercialId
+        WHERE c.WhatsAppConversacionId = @Id
+          AND i.Activo = 1
+          AND i.FechaCierre IS NULL
+          AND NOT EXISTS (
+              SELECT 1
+              FROM dbo.EstadoInteresComercial e
+              WHERE e.EstadoInteresComercialId = i.EstadoInteresComercialId
+                AND e.EsFinal = 1
+          );
+
+        COMMIT;
         """, cancellationToken, ("@UserId", userId), ("@Id", conversationId));
+
+    public Task ChangeStateAsync(
+    long conversationId,
+    string estado,
+    CancellationToken cancellationToken = default) => ExecuteAsync("""
+        SET XACT_ABORT ON;
+        BEGIN TRAN;
+
+        IF @Estado IS NULL OR @Estado NOT IN ('Abierta', 'Pendiente', 'Cerrada')
+            THROW 51000, 'Estado de conversación inválido.', 1;
+
+        DECLARE @ContactoId bigint;
+        DECLARE @PhoneNumberId varchar(50);
+
+        SELECT
+            @ContactoId = WhatsAppContactoId,
+            @PhoneNumberId = PhoneNumberId
+        FROM dbo.WhatsAppConversacion WITH (UPDLOCK, HOLDLOCK)
+        WHERE WhatsAppConversacionId = @Id;
+
+        IF @ContactoId IS NULL
+            THROW 51000, 'Conversación no encontrada.', 1;
+
+        IF @Estado IN ('Abierta', 'Pendiente')
+           AND EXISTS (
+               SELECT 1
+               FROM dbo.WhatsAppConversacion WITH (UPDLOCK, HOLDLOCK)
+               WHERE WhatsAppContactoId = @ContactoId
+                 AND PhoneNumberId = @PhoneNumberId
+                 AND WhatsAppConversacionId <> @Id
+                 AND Estado IN ('Abierta', 'Pendiente')
+           )
+            THROW 51000, 'El contacto ya tiene otra conversación activa.', 1;
+
+        UPDATE dbo.WhatsAppConversacion
+        SET Estado = @Estado,
+            FechaCierre = CASE
+                WHEN @Estado = 'Cerrada'
+                    THEN COALESCE(FechaCierre, SYSUTCDATETIME())
+                ELSE NULL
+            END
+        WHERE WhatsAppConversacionId = @Id;
+
+        COMMIT;
+        """, cancellationToken, ("@Estado", estado), ("@Id", conversationId));
 
     public Task LinkCustomerAsync(long conversationId, int customerId, CancellationToken cancellationToken = default) => ExecuteAsync("""
         SET XACT_ABORT ON; BEGIN TRAN;

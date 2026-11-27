@@ -13,6 +13,13 @@ public sealed class WhatsAppAssignRequest
     public int? UsuarioResponsableId { get; set; }
 }
 
+public sealed class WhatsAppChangeStateRequest
+{
+    [Required]
+    [RegularExpression("^(Abierta|Pendiente|Cerrada)$")]
+    public string Estado { get; set; } = string.Empty;
+}
+
 public sealed class WhatsAppLinkConsultationRequest
 {
     [Range(1, int.MaxValue)] public int InteresComercialId { get; set; }

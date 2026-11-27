@@ -10,6 +10,10 @@ public interface IWhatsAppService
     Task<WhatsAppConversationDetailDTO?> GetConversationAsync(long id, CancellationToken cancellationToken = default);
     Task<WhatsAppSendResult> SendTextAsync(long conversationId, WhatsAppSendMessageRequest request, CancellationToken cancellationToken = default);
     Task AssignAsync(long conversationId, int? userId, CancellationToken cancellationToken = default);
+    Task ChangeStateAsync(
+    long conversationId,
+    string estado,
+    CancellationToken cancellationToken = default);
     Task LinkCustomerAsync(long conversationId, int customerId, CancellationToken cancellationToken = default);
     Task LinkConsultationAsync(long conversationId, int consultationId, CancellationToken cancellationToken = default);
     Task<int> CreateConsultationAsync(long conversationId, WhatsAppCreateConsultationRequest request, CancellationToken cancellationToken = default);

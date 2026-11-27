@@ -3,3 +3,48 @@
 @media(max-width:1050px){.data-table-filters.data-table-filters-balanced.consultations-filters{grid-template-columns:repeat(3,minmax(150px,1fr))}.consultations-filters .data-table-search{grid-column:span 2}.consultation-form-layout{grid-template-columns:minmax(0,1fr) 270px}}
 @media(max-width:850px){.data-table-filters.data-table-filters-balanced.consultations-filters{grid-template-columns:1fr 1fr}.consultations-filters .data-table-search{grid-column:1/-1}.consultation-form-layout,.consultation-relations-grid{grid-template-columns:1fr}.consultation-summary{position:static}}
 @media(max-width:600px){.data-table-filters.data-table-filters-balanced.consultations-filters{grid-template-columns:1fr}.consultations-filters>*{grid-column:auto!important}.consultation-state-dialog footer{flex-direction:column-reverse}.consultation-state-dialog footer .button{width:100%;justify-content:center}}
+
+.consultation-detail .product-form-grid {
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 12px 20px;
+}
+
+.consultation-detail .product-form-main {
+  display: grid;
+  gap: 12px;
+  min-width: 0;
+}
+
+.consultation-detail .product-read-field {
+  min-width: 0;
+  overflow-wrap: anywhere;
+}
+
+.consultation-detail .consultation-relations-grid {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 16px;
+}
+
+.consultation-detail .consultation-relations-grid > div {
+  min-width: 0;
+  max-height: 220px;
+  overflow-y: auto;
+}
+
+@media (max-width: 1200px) {
+  .consultation-detail .product-form-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 850px) {
+  .consultation-detail .consultation-relations-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 600px) {
+  .consultation-detail .product-form-grid {
+    grid-template-columns: 1fr;
+  }
+}

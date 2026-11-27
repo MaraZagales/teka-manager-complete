@@ -10,7 +10,6 @@ import {
   UserRound,
 } from "lucide-react";
 import { useEffect, useMemo, useState } from "react";
-import { StatusBadge } from "../../../../components/data/StatusBadge";
 import { hasPermission } from "../../../../services/authorization";
 import type { Interes } from "../../../../services/commercialApi";
 import {
@@ -25,7 +24,7 @@ import {
   type Presupuesto,
 } from "../../../../services/commercialOperationsApi";
 import type { Product } from "../../../../services/productsApi";
-import { formatProductOption } from "../../../../services/productDisplay";
+import { ProductPredictiveSearch } from "../shared/ProductPredictiveSearch";
 import {
   whatsAppApi,
   type WhatsAppAssignee,
@@ -134,7 +133,9 @@ export function WhatsAppCommercialPanel({
   const selectedCustomer = customers.find(
     (x) => x.clienteId === Number(customerId),
   );
-  const validQuantity = Number(quantity) > 0;
+
+  const validQuantity =
+    Number.isInteger(Number(quantity)) && Number(quantity) > 0;
   const base = `clienteId=${Number(customerId)}&consultaId=${consultation?.interesComercialId || ""}${consultation ? `&canalId=${consultation.canalVentaId}&interes=${encodeURIComponent(consultation.descripcion.slice(0, 150))}` : ""}${productId ? `&productoId=${productId}&cantidad=${encodeURIComponent(quantity)}` : ""}`;
   async function run(action: () => Promise<unknown>) {
     setSaving(true);
@@ -176,7 +177,12 @@ export function WhatsAppCommercialPanel({
         });
     });
   }
+
   async function saveConsultation() {
+    if (productId && !validQuantity) {
+      onError("Ingresá una cantidad entera mayor a cero.");
+      return;
+    }
     if (!description.trim() || description.trim().length < 3) {
       onError("Describí la necesidad comercial.");
       return;
@@ -224,6 +230,7 @@ export function WhatsAppCommercialPanel({
       });
     });
   }
+
   async function linkConsultation() {
     if (!Number(linkId)) return;
     await run(() =>
@@ -238,8 +245,37 @@ export function WhatsAppCommercialPanel({
       ),
     );
   }
+
+  async function changeState(value: "Abierta" | "Pendiente" | "Cerrada") {
+    await run(() =>
+      whatsAppApi.changeState(conversation.conversacionId, value),
+    );
+  }
+
+  function validateCommercialAction() {
+    if (!consultation) {
+      onError("Primero debés registrar la consulta.");
+      return false;
+    }
+
+    if (!Number(customerId)) {
+      onError("Debés vincular un cliente.");
+      return false;
+    }
+
+    if (productId && !validQuantity) {
+      onError("Ingresá una cantidad entera mayor a cero.");
+      return false;
+    }
+
+    return true;
+  }
+
   function order() {
-    if (!consultation || !Number(customerId) || !canSales) return;
+    if (!consultation || !canSales) return;
+
+    if (!validateCommercialAction()) return;
+
     sessionStorage.setItem(
       "teka-pedido-borrador",
       JSON.stringify({
@@ -259,11 +295,6 @@ export function WhatsAppCommercialPanel({
       <header>
         <div>
           <strong>Gestión comercial</strong>
-          <span>
-            {consultation
-              ? `Consulta #${consultation.interesComercialId}`
-              : "Sin consulta registrada"}
-          </span>
         </div>
         {consultation && (
           <a
@@ -279,15 +310,12 @@ export function WhatsAppCommercialPanel({
           <h3>
             <UserRound size={15} /> Cliente o contacto
           </h3>
-          <p className="wa-contact-id">
-            WhatsApp ID: {conversation.whatsAppId}
-          </p>
           {conversation.clienteId && selectedCustomer ? (
             <div className="wa-linked">
               <strong>
                 {selectedCustomer.nombre} {selectedCustomer.apellido}
               </strong>
-              <small>Cliente #{selectedCustomer.clienteId} vinculado</small>
+              <small>Cliente vinculado</small>
             </div>
           ) : (
             <>
@@ -341,8 +369,40 @@ export function WhatsAppCommercialPanel({
         </section>
         <section>
           <h3>
-            <FileText size={15} /> Consulta comercial
+            <FileText size={15} /> Gestión de la consulta
           </h3>
+          <label>
+            Responsable
+            <select
+              value={conversation.usuarioResponsableId || ""}
+              disabled={!canEdit || saving}
+              onChange={(e) => void assign(e.target.value)}
+            >
+              <option value="">Sin asignar</option>
+              {assignees.map((x) => (
+                <option key={x.id} value={x.id}>
+                  {[x.nombre, x.apellido].filter(Boolean).join(" ")}
+                </option>
+              ))}
+            </select>
+          </label>
+          <label>
+            Estado de atención
+            <select
+              value={conversation.estado}
+              disabled={!canEdit || saving}
+              onChange={(e) =>
+                void changeState(
+                  e.target.value as "Abierta" | "Pendiente" | "Cerrada",
+                )
+              }
+            >
+              <option value="Abierta">Abierta</option>
+              <option value="Pendiente">Pendiente</option>
+              <option value="Cerrada">Cerrada</option>
+            </select>
+          </label>
+
           {!consultation && (
             <div className="wa-link-existing">
               <select
@@ -357,7 +417,7 @@ export function WhatsAppCommercialPanel({
                       key={x.interesComercialId}
                       value={x.interesComercialId}
                     >
-                      #{x.interesComercialId} · {x.clienteNombre || x.telefono}
+                      {x.clienteNombre || x.telefono} · {x.descripcion}{" "}
                     </option>
                   ))}
               </select>
@@ -369,88 +429,78 @@ export function WhatsAppCommercialPanel({
               </button>
             </div>
           )}
-          <label>
-            Asunto
-            <select
-              value={reasonId}
-              disabled={Boolean(consultation && closed(consultation)) || saving}
-              onChange={(e) => setReasonId(e.target.value)}
-            >
-              <option value="">Consulta general</option>
-              {reasons
-                .filter((x) => x.activo)
-                .map((x) => (
-                  <option key={x.motivoConsultaId} value={x.motivoConsultaId}>
-                    {x.nombre}
-                  </option>
-                ))}
-            </select>
-          </label>
-          <label>
-            Descripción
-            <textarea
-              maxLength={500}
-              value={description}
-              disabled={Boolean(consultation && closed(consultation)) || saving}
-              onChange={(e) => setDescription(e.target.value)}
-            />
-          </label>
-          <label>
-            Producto de interés
-            <select
-              value={productId}
-              disabled={Boolean(consultation && closed(consultation)) || saving}
-              onChange={(e) => setProductId(e.target.value)}
-            >
-              <option value="">Sin producto confirmado</option>
-              {products
-                .filter((x) => x.activo)
-                .map((x) => (
-                  <option key={x.productoId} value={x.productoId}>
-                    {formatProductOption(x)}
-                  </option>
-                ))}
-            </select>
-          </label>
-          <div className="wa-two-fields">
+          <details className="wa-consultation-details">
+            <summary>Datos adicionales</summary>
+
             <label>
-              Monto potencial
-              <input
-                type="number"
-                min="0"
-                step="0.01"
-                value={amount}
+              Asunto
+              <select
+                value={reasonId}
                 disabled={
                   Boolean(consultation && closed(consultation)) || saving
                 }
-                onChange={(e) => setAmount(e.target.value)}
+                onChange={(e) => setReasonId(e.target.value)}
+              >
+                <option value="">Consulta general</option>
+                {reasons
+                  .filter((x) => x.activo)
+                  .map((x) => (
+                    <option key={x.motivoConsultaId} value={x.motivoConsultaId}>
+                      {x.nombre}
+                    </option>
+                  ))}
+              </select>
+            </label>
+
+            <label>
+              Observaciones
+              <textarea
+                maxLength={500}
+                value={description}
+                disabled={
+                  Boolean(consultation && closed(consultation)) || saving
+                }
+                onChange={(e) => setDescription(e.target.value)}
               />
             </label>
+          </details>
+
+          <ProductPredictiveSearch
+            key={conversation.conversacionId}
+            products={products}
+            value={productId}
+            disabled={
+              (consultation ? !canEdit : !canCreate) ||
+              Boolean(consultation && closed(consultation)) ||
+              saving
+            }
+            onChange={(value) => {
+              setProductId(value);
+              setQuantity("1");
+            }}
+          />
+
+          {productId && (
             <label>
-              Cantidad para precarga
+              Cantidad
               <input
                 type="number"
-                min="0.01"
-                step="0.01"
+                min="1"
+                step="1"
                 value={quantity}
+                disabled={
+                  (consultation ? !canEdit : !canCreate) ||
+                  Boolean(consultation && closed(consultation)) ||
+                  saving
+                }
                 onChange={(e) => setQuantity(e.target.value)}
               />
+              {!validQuantity && (
+                <small className="wa-warning">
+                  Ingresá una cantidad entera mayor a cero.
+                </small>
+              )}
             </label>
-          </div>
-          <small>
-            La Consulta conserva un único producto. La cantidad se confirma en
-            Oportunidad, Presupuesto o Pedido.
-          </small>
-          {consultation && (
-            <div className="wa-status-row">
-              <StatusBadge tone={closed(consultation) ? "neutral" : "success"}>
-                {consultation.estadoNombre}
-              </StatusBadge>
-              <span>
-                {consultation.responsableNombre ||
-                  "Sin responsable de consulta"}
-              </span>
-            </div>
           )}
           <button
             className="button primary wa-save"
@@ -471,23 +521,8 @@ export function WhatsAppCommercialPanel({
         </section>
         <section>
           <h3>
-            <BriefcaseBusiness size={15} /> Responsable y acciones
+            <BriefcaseBusiness size={15} /> Acciones comerciales
           </h3>
-          <label>
-            Responsable de conversación
-            <select
-              value={conversation.usuarioResponsableId || ""}
-              disabled={!canEdit || saving}
-              onChange={(e) => void assign(e.target.value)}
-            >
-              <option value="">Sin asignar</option>
-              {assignees.map((x) => (
-                <option key={x.id} value={x.id}>
-                  {[x.nombre, x.apellido].filter(Boolean).join(" ")}
-                </option>
-              ))}
-            </select>
-          </label>
           {consultation && Number(customerId) ? (
             <div className="wa-action-grid">
               {canCreate && (
@@ -497,6 +532,14 @@ export function WhatsAppCommercialPanel({
                       ? `/comercial/oportunidades/${consultation.oportunidadComercialId}`
                       : `/comercial/oportunidades/new?${base}`
                   }
+                  onClick={(event) => {
+                    if (
+                      !consultation.oportunidadComercialId &&
+                      !validateCommercialAction()
+                    ) {
+                      event.preventDefault();
+                    }
+                  }}
                 >
                   <BriefcaseBusiness size={15} />
                   {consultation.oportunidadComercialId
@@ -505,7 +548,14 @@ export function WhatsAppCommercialPanel({
                 </a>
               )}
               {canCreate && (
-                <a href={`/comercial/presupuestos?${base}`}>
+                <a
+                  href={`/comercial/presupuestos?${base}`}
+                  onClick={(event) => {
+                    if (!validateCommercialAction()) {
+                      event.preventDefault();
+                    }
+                  }}
+                >
                   <FileText size={15} />
                   Generar presupuesto
                 </a>
@@ -540,7 +590,7 @@ export function WhatsAppCommercialPanel({
         {consultation && (
           <section>
             <h3>
-              <History size={15} /> Relaciones existentes
+              <History size={15} /> Operaciones vinculadas
             </h3>
             <div className="wa-relations">
               {activities.map((x) => (
@@ -548,7 +598,7 @@ export function WhatsAppCommercialPanel({
                   key={`a${x.actividadComercialId}`}
                   href={`/comercial/agenda/${x.actividadComercialId}`}
                 >
-                  Actividad #{x.actividadComercialId} · {x.estado}
+                  {x.titulo} · {x.estado}{" "}
                 </a>
               ))}
               {budgets.map((x) => (
@@ -556,8 +606,7 @@ export function WhatsAppCommercialPanel({
                   key={`p${x.presupuestoComercialId}`}
                   href={`/comercial/presupuestos/${x.presupuestoComercialId}`}
                 >
-                  Presupuesto {x.numero || `#${x.presupuestoComercialId}`} ·{" "}
-                  {x.estado}
+                  Presupuesto {x.numero || "sin numerar"} · {x.estado}
                 </a>
               ))}
               {!activities.length && !budgets.length && (
